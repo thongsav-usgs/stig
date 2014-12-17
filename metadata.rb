@@ -1,5 +1,5 @@
 name             'stig'
-maintainer       'Ivan Suftin'
+maintainer       'USGS WSI'
 maintainer_email 'isuftin@usgs.gov'
 license          'all_rights'
 description      'Installs/Configures CIS STIG benchmarks'
