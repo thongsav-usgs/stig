@@ -7,7 +7,7 @@ provisioner:
 
 platforms:
   - name: cida-centos-6.6
-    driver-config:
+    driver:
       box: usgs-wsi-centos-6.6
       box_url: ftp://ftpext.usgs.gov/pub/er/wi/middleton/dblodgett/boxes/vmware/opscode_centos-6.6_chef-provisionerless.box
 
