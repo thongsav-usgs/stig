@@ -6,7 +6,10 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: centos-6.5
+  - name: cida-centos-6.6
+    driver-config:
+      box: usgs-wsi-centos-6.6
+      box_url: ftp://ftpext.usgs.gov/pub/er/wi/middleton/dblodgett/boxes/vmware/opscode_centos-6.6_chef-provisionerless.box
 
 suites:
   - name: default
