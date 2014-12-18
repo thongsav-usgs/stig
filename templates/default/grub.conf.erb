@@ -12,7 +12,7 @@ timeout=5
 password --md5 <%= node['stig']['grub']['hashedpassword'] %>
 splashimage=(hd0,0)/grub/splash.xpm.gz
 hiddenmenu
-title CentOS 6 (2.6.32-504.el6.x86_64)
+title CentOS 6 (<%= node['os_version']%>)
         root (hd0,0)
-        kernel /vmlinuz-2.6.32-504.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 crashkernel=auto rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet
-        initrd /initramfs-2.6.32-504.el6.x86_64.img
+        kernel /vmlinuz-<%= node['os_version']%> ro root=/dev/mapper/VolGroup-lv_root rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 crashkernel=auto rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet
+        initrd /initramfs-<%= node['os_version']%>.img
