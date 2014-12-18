@@ -25,7 +25,6 @@ ruby_block "insert_line_sulogin" do
     file.insert_line_if_no_match("/SINGLE/s/sushell/sulogin/", "/SINGLE/s/sushell/sulogin/")
     file.write_file
   end
-  action :run
   not_if "grep -q /SINGLE/s/sushell/sulogin/ /etc/sysconfig/init"
 end
 
@@ -35,7 +34,6 @@ ruby_block "insert_line_prompt" do
     file.insert_line_if_no_match("/PROMPT/s/yes/no/", "/PROMPT/s/yes/no/")
     file.write_file
   end
-  action :run
   not_if "grep -q /PROMPT/s/yes/no/ /etc/sysconfig/init"
 end
 
@@ -43,12 +41,11 @@ end
 # ability to interactively boot the system and select which services to start on 
 # boot. Set the PROMPT parameter in /etc/sysconfig/init to no. PROMPT=no
 
-ruby_block "set_promp_no" do
+ruby_block "set_prompt_no" do
   block do
     file = Chef::Util::FileEdit.new("/etc/sysconfig/init")
     file.search_file_replace_line("PROMPT=yes", "PROMPT=no")
     file.write_file
   end
-  action :run
   not_if "grep -q PROMPT=no /etc/sysconfig/init"
 end
