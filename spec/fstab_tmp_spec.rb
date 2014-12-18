@@ -9,4 +9,14 @@ describe "stig::fstab_tmp" do
     options: ["remount","noexec","nodev","nosuid"]
     )
   end
+  
+  #1.1.6
+  it "binds /tmp to /var/tmp" do
+    expect(chef_run).to mount_mount("/var/tmp").with(
+      device: "/tmp",
+      fstype: "tmpfs",
+      options: ["bind"]
+    )
+  end  
+  
 end
