@@ -15,3 +15,4 @@ include_recipe "stig::boot_settings"
 
 # 1.6.1-3
 include_recipe "stig::proc_hard"
+
