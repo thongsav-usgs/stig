@@ -1,4 +1,4 @@
-require "chefspec"
+require "spec_helper"
 
 describe "stig::aide" do
   let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
