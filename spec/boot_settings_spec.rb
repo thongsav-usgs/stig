@@ -1,4 +1,4 @@
-require "chefspec"
+require "spec_helper"
 
 describe "stig::boot_settings" do
   let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
