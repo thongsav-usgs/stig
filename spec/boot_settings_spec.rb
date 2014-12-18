@@ -15,17 +15,16 @@ describe "stig::boot_settings" do
     stub_command("grep -q PROMPT=no /etc/sysconfig/init").and_return(true)
   end
   
-  # 1.5.1, 1.5.2
-  it "makes /etc/grub.conf root only" do
-    expect(chef_run).to create_file("/etc/grub.conf").with(
-    owner: "root",
-    group: "root",
-    mode: "600",
-    manage_symlink_source: true)
+  # 1.5.1, 1.5.2 1.5.3
+  it "creates /boot/grub/grub.conf template" do
+    expect(chef_run).to create_template("/boot/grub/grub.conf").with(
+      source: "grub.conf.erb",
+      owner: "root",
+      group: "root",
+      mode: 0600,
+      sensitive: true
+    )
   end
-  
-  # 1.5.3
-  # NEEDS TO BE IMPLEMENTED!!!
   
   # 1.5.4
   it "runs a ruby block to insert an sulogin line into /etc/sysconfig/init" do

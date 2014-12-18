@@ -1,19 +1,22 @@
-# 1.5.1 Set the owner and group of /etc/grub.conf to the root user.
-# 1.5.2 Set permission on the /etc/grub.conf file to read and write for root only.
-# Note that default settings are compliant, this is reinforcing only.
-file "/etc/grub.conf" do
-  owner "root"
-  group "root"
-  mode "600"
-  manage_symlink_source true
-  action :create
-end
-
-# 1.5.3 Setting the boot loader password will require that the person who is 
+# 1.5.1 Set the owner and group of /etc/grub.conf to the root user. (Scored)
+# 1.5.2 Set permission on the /etc/grub.conf file to read and write for root only. (Scored)
+# 1.5.3 Set Boot Loader Password (Scored)
+# 
+# Setting the boot loader password will require that the person who is 
 # rebooting the must enter a password before being able to set command line boot 
 # parameters.
+#
+# Requiring a boot password upon execution of the boot loader will prevent an 
+# unauthorized user from entering boot parameters or changing the boot partition.
+# This prevents users from weakening security (e.g. turning off SELinux at boot time).
 
-# NEEDS TO BE IMPLEMENTED!!!
+template "/boot/grub/grub.conf" do
+  source "grub.conf.erb"
+  owner "root"
+  group "root"
+  mode 0600
+  sensitive true
+end
 
 # 1.5.4 Require Authentication for Single-User Mode. Since /etc/init determines 
 # what run state the system is in, setting the entry in /etc/sysconfig/init will 
