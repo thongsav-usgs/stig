@@ -10,6 +10,9 @@ include_recipe "stig::fstab_tmp"
 # 1.3.1, 1.3.2
 include_recipe "stig::aide"
 
+# 1.4.*
+# Already passing at default install. notes are in "stig::selinux.rb"
+
 # 1.5.1-5
 include_recipe "stig::boot_settings"
 
