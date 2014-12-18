@@ -1,4 +1,4 @@
-u
+#
 # Cookbook Name:: stig
 # Recipe:: default
 #
@@ -10,5 +10,5 @@ include_recipe "stig::fstab_tmp"
 # 1.3.1, 1.3.2
 include_recipe "stig::aide"
 
-# 1.5.3
-include_recipe "stig::grub"
+# 1.5.1-5
+include_recipe "stig::boot_settings"
