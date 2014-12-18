@@ -13,5 +13,5 @@ include_recipe "stig::aide"
 # 1.5.1-5
 include_recipe "stig::boot_settings"
 
-# 1.5.3
-include_recipe "stig::grub"
+# 1.6.1-3
+include_recipe "stig::proc_hard"
