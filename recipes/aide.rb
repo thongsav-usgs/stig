@@ -12,6 +12,13 @@ package "aide" do
   action :install
 end
 
+execute "init_aide" do
+  user "root"
+  command "/usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'"
+  creates "/var/lib/aide/aide.db.gz"
+  action :run
+end
+
 cron "aide_cron" do
   command "/usr/sbin/aide --check"
   minute "0"
