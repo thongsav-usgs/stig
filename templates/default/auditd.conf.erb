@@ -13,13 +13,13 @@ disp_qos = lossy
 dispatcher = /sbin/audispd
 name_format = NONE
 ##name = mydomain
-max_log_file = 6 
-max_log_file_action = ROTATE
+max_log_file = <%= node['stig']['auditd']['max_log_file']%>
+max_log_file_action = <%= node['stig']['auditd']['max_log_file_action']%>
 space_left = 75
-space_left_action = SYSLOG
-action_mail_acct = root
+space_left_action = <%= node['stig']['auditd']['space_left_action']%>
+action_mail_acct = <%= node['stig']['auditd']['action_mail_acct']%>
 admin_space_left = 50
-admin_space_left_action = SUSPEND
+admin_space_left_action = <%= node['stig']['auditd']['admin_space_left_action']%>
 disk_full_action = SUSPEND
 disk_error_action = SUSPEND
 ##tcp_listen_port = 
@@ -29,4 +29,4 @@ tcp_max_per_addr = 1
 tcp_client_max_idle = 0
 enable_krb5 = no
 krb5_principal = auditd
-##krb5_key_file = /etc/audit/audit.key
+##krb5_key_file = /etc/audit/audit.keyspace_left_action

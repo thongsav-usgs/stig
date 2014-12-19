@@ -10,6 +10,7 @@
 # unauthorized user from entering boot parameters or changing the boot partition.
 # This prevents users from weakening security (e.g. turning off SELinux at boot time).
 
+# Also applies CIS 4.2.3
 template "/boot/grub/grub.conf" do
   source "grub.conf.erb"
   owner "root"
@@ -51,4 +52,12 @@ ruby_block "set_prompt_no" do
     file.write_file
   end
   not_if "grep -q PROMPT=no /etc/sysconfig/init"
+end
+
+# 4.2.1-3
+template "/etc/audit/auditd.conf" do
+  source "auditd.conf.erb"
+  owner "root"
+  group "root"
+  mode 0640
 end
