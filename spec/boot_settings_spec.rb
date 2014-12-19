@@ -44,6 +44,15 @@ describe "stig::boot_settings" do
     it "runs a ruby block to change PROMPT to no" do
       expect(chef_run).to run_ruby_block("set_prompt_no")
     end
+    
+    it "creates /etc/audit/auditd.conf template" do
+      expect(chef_run).to create_template("/etc/audit/auditd.conf").with(
+        source: "auditd.conf.erb",
+        owner: "root",
+        group: "root",
+        mode: 0640,
+      )
+    end
   end
   describe "second run" do
     # Make sure these do not run when the tests come back true.
