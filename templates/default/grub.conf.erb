@@ -14,5 +14,5 @@ splashimage=(hd0,0)/grub/splash.xpm.gz
 hiddenmenu
 title CentOS 6 (<%= node['os_version']%>)
         root (hd0,0)
-        kernel /vmlinuz-<%= node['os_version']%> ro root=/dev/mapper/VolGroup-lv_root rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 crashkernel=auto rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet
+        kernel /vmlinuz-<%= node['os_version']%> ro root=/dev/mapper/VolGroup-lv_root rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 crashkernel=auto rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet <%= node['stig']['auditd']['kernel_audit_grub']%>
         initrd /initramfs-<%= node['os_version']%>.img

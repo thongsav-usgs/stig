@@ -13,8 +13,15 @@ platforms:
       box: usgs-wsi-centos-6.6
       box_url: ftp://ftpext.usgs.gov/pub/er/wi/middleton/dblodgett/boxes/vmware/opscode_centos-6.6_chef-provisionerless.box
 
+# Adding auditd with cis ruleset addresses CIS CentOS Benchmark V1.0.0 4.2.2 and 4.2.4-18
+# NOTE: 4.2.17 needs to be uncommented. and 4.2.12 needs to be confirmed. See cis template for more info.
+# Note: There is probably a better way to pull in auditd and apply the cis attribute, this works for now.
 suites:
   - name: default
     run_list:
       - recipe[stig::default]
+      - recipe[auditd::rules]
     attributes:
+      auditd:
+        ruleset: "cis"
+          
