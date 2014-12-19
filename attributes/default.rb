@@ -1,6 +1,5 @@
-default['stig']['grub']['password'] = 'ChangeMe'
-md5hash = `openssl passwd -1 #{node.default['stig']['grub']['password']}`
-default['stig']['grub']['hashedpassword'] = md5hash
+# Use an MD5 hash for this. Ex: openssl passwd -1 ChangeMe
+default['stig']['grub']['hashedpassword'] = "$1$ifTCDC.V$0VpmYkffVbzFkE8ElJrWU/" # Hashed "ChangeMe"
 
 # 4.2.1.1 Configure Audit Log Storage Size (Not Scored)
 default['stig']['auditd']['max_log_file'] = "6" #MB
