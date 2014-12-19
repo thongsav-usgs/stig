@@ -5,7 +5,7 @@ describe "stig::mount_disable" do
   
   it "creates /etc/modprobe.d/CIS.conf" do
     expect(chef_run).to create_template("/etc/modprobe.d/CIS.conf").with(
-      source: "limits.conf.erb",
+      source: "CIS.conf.erb",
       owner: "root",
       group: "root",
       mode: 0644
