@@ -22,3 +22,6 @@ include_recipe "stig::proc_hard"
 # 1.1.18 - 1.1.24
 include_recipe "stig::mount_disable"
 
+# 3.3
+include_recipe "stig::avahi_daemon"
+
