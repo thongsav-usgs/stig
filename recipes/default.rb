@@ -19,3 +19,6 @@ include_recipe "stig::boot_settings"
 # 1.6.1-3
 include_recipe "stig::proc_hard"
 
+# 1.1.18 - 1.1.24
+include_recipe "stig::mount_disable"
+
