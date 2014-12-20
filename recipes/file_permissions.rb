@@ -1,5 +1,5 @@
 # Cookbook Name:: stig
-# Recipe:: hosts
+# Recipe:: file_permissions
 # Author: Ivan Suftin <isuftin@usgs.gov>
 
 # 6.1.3 Set User/Group Owner and Permission on /etc/anacrontab
@@ -175,4 +175,105 @@ end
 
 file "/etc/at.allow" do
   action :delete
+end
+
+# 9.1.1 Verify Permissions on /etc/passwd
+# The /etc/passwd file contains user account information
+# that is used by many system utilities and therefore must
+# be readable for these utilities to operate.
+#
+# It is critical to ensure that the /etc/passwd file is
+# protected from unauthorized write access. Although it
+# is protected by default, the file permissions could be
+# changed either inadvertently or through malicious actions.
+#
+# 9.1.5 Verify User/Group Ownership on /etc/passwd
+# The /etc/passwd file contains a list of all the valid userIDs defined
+#  in the system, but not the passwords. The command below sets the owner
+# and group of the file to root.
+#
+# The /etc/passwd file needs to be protected from unauthorized changes
+# by non- priliveged users, but needs to be readable as this information
+# is used with many non- privileged programs.
+file "/etc/passwd" do
+  owner "root"
+  group "root"
+  mode 0644
+end
+
+# 9.1.2 Verify Permissions on /etc/shadow
+# The /etc/shadow file is used to store the information about
+# user accounts that is critical to the security of those accounts,
+# such as the hashed password and other security information.
+#
+# If attackers can gain read access to the /etc/shadow file, they
+# can easily run a password cracking program against the hashed
+# password to break it. Other security information that is stored
+# in the /etc/shadow file (such as expiration) could also be useful
+# to subvert the user accounts.
+#
+# 9.1.6 Verify User/Group Ownership on /etc/shadow
+# The /etc/shadow file contains the one-way cipher text passwords
+# for each user defined in the /etc/passwd file. The command below
+# sets the user and group ownership of the file to root.
+#
+# If attackers can gain read access to the /etc/shadow file, they
+# can easily run a password cracking program against the hashed
+# password to break it. Other security information that is stored
+# in the /etc/shadow file (such as expiration) could also be useful
+# to subvert the user accounts.
+file "/etc/shadow" do
+  owner "root"
+  group "root"
+  mode 0000
+end
+
+# 9.1.3 Verify Permissions on /etc/gshadow
+# The /etc/gshadow file contains information about group accounts
+# that is critical to the security of those accounts, such as the
+# hashed password and other security information.
+#
+# If attackers can gain read access to the /etc/gshadow file, they
+# can easily run a password cracking program against the hashed
+# password to break it. Other security information that is stored
+# in the /etc/gshadow file (such as expiration) could also be useful
+# to subvert the group accounts.
+#
+# 9.1.7 Verify User/Group Ownership on /etc/gshadow
+# The /etc/gshadow file contains information about group accounts
+# that is critical to the security of those accounts, such as the
+# hashed password and other security information.
+#
+# If attackers can gain read access to the /etc/gshadow file, they
+# can easily run a password cracking program against the hashed
+# password to break it. Other security information that is stored
+# in the /etc/gshadow file (such as expiration) could also be
+# useful to subvert the group accounts.
+file "/etc/gshadow" do
+  owner "root"
+  group "root"
+  mode 0000
+end
+
+# 9.1.4 Verify Permissions on /etc/group
+# The /etc/group file contains a list of all the valid groups defined
+# in the system. The command below allows read/write access for root
+# and read access for everyone else.
+#
+# The /etc/group file needs to be protected from unauthorized changes
+# by non-privileged users, but needs to be readable as this information
+# is used with many non-privileged programs.
+#
+# 9.1.8 Verify User/Group Ownership on /etc/group
+# The /etc/group file contains a list of all the valid groups defined
+# in the system. The command below allows read/write access for root
+# and read access for everyone else.
+#
+# The /etc/group file needs to be protected from unauthorized changes
+# by non-priliveged users, but needs to be readable as this information
+# is used with many non-privileged programs.
+file "/etc/group" do
+  owner "root"
+  group "root"
+  mode 0644
 end

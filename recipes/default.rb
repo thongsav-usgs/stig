@@ -54,3 +54,6 @@ include_recipe "stig::login_defs"
 
 # 8.1
 include_recipe "stig::login_banner"
+
+# 9.1.1 - 9.1.8
+include_recipe "stig::file_permissions"
