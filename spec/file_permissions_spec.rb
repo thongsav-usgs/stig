@@ -58,4 +58,16 @@ describe "stig::file_permissions" do
       mode: 0700
     )
   end
+  
+  it "creates /etc/at.deny template" do
+    expect(chef_run).to create_file("/etc/at.deny").with(
+      owner: "root",
+      group: "root",
+      mode: 0700
+    )
+  end
+  
+  it "creates /etc/at.allow template" do
+    expect(chef_run).to delete_file("/etc/at.allow")
+  end
 end

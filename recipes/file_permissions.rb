@@ -137,3 +137,42 @@ directory "/etc/cron.d" do
   group "root"
   mode 0700
 end
+
+# 6.1.10 Restrict at Daemon
+# The at daemon works with the cron daemon to allow
+# non-privileged users to submit one time only jobs
+# at their convenience. There are two files that
+# control at: /etc/at.allow and /etc/at.deny. If
+# /etc/at.allow exists, then users listed in the file
+# are the only ones that can create at jobs. If
+# /etc/at.allow does not exist and /etc/at.deny
+# does exist, then any user on the system, with the
+# exception of those listed in /etc/at.deny, are
+# allowed to execute at jobs. An empty /etc/at.deny
+# file allows any user to create at jobs. If neither
+# /etc/at.allow nor /etc/at.deny exist, then only
+# superuser can create at jobs. The commands below remove
+# the /etc/at.deny file and create an empty /etc/at.allow
+# file that can only be read and modified by user and group
+# root.
+#
+# Granting write access to this directory for non-privileged users
+# could provide them the means to gain unauthorized elevated privileges.
+# Granting read access to this directory could give an unprivileged
+# user insight in how to gain elevated privileges or circumvent
+# auditing controls. In addition, it is a better practice to create
+# a white list of users who can execute at jobs versus a blacklist of
+# users who can’t execute at jobs as a system administrator will always
+# know who can create jobs and does not have to worry about remembering
+# to add a user to the blacklist when a new user id is created.
+
+# NOTE: Using /etc/at.deny here like solaris and removing /etc/at.allow if exists
+file "/etc/at.deny" do
+  owner "root"
+  group "root"
+  mode 0700
+end
+
+file "/etc/at.allow" do
+  action :delete
+end
