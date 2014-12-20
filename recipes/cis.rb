@@ -52,6 +52,21 @@
 # If the protocol is not being used, it is recommended that kernel module
 # not be loaded, disabling the service to reduce the potential attack surface.
 
+# 4.8.3 Disable RDS
+# The Reliable Datagram Sockets (RDS) protocol is a transport layer protocol
+# designed to provide low-latency, high-bandwidth communications between
+# cluster nodes. It was developed by the Oracle Corporation.
+#
+#If the protocol is not being used, it is recommended that kernel module not
+# be loaded, disabling the service to reduce the potential attack surface.
+
+# 4.8.4 Disable TIPC
+# The Transparent Inter-Process Communication (TIPC) protocol is designed
+# to provide communication between cluster nodes.
+#
+#If the protocol is not being used, it is recommended that kernel module not
+# be loaded, disabling the service to reduce the potential attack surface.
+
 template "/etc/modprobe.d/CIS.conf" do
   source "etc_modprobe.d_CIS.conf.erb"
   owner "root"

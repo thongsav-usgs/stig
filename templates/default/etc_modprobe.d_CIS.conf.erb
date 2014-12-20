@@ -42,3 +42,7 @@ install sctp /bin/true
 install rds /bin/true
 <% end -%>
 
+<% if node[:stig][:network][:disable_tipc] -%>
+install tipc /bin/true
+<% end -%>
+
