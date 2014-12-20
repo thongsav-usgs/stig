@@ -65,9 +65,87 @@ end
 # protocols (bgp, ospf, etc) on your system. If you are using asymmetrical routing on
 # your server, you will not be able to enable this feature without breaking the routing.
 
+if node[:stig][:network][:ip_forwarding]
+  ip_forwarding = 1
+else
+  ip_forwarding = 0
+end
+
+if node[:stig][:network][:packet_redirects]
+  send_redirects = 1
+else
+  send_redirects = 0
+end
+
+if node[:stig][:network][:icmp_redirect_accept]
+  icmp_redirect_accept = 1
+else
+  icmp_redirect_accept = 0
+end
+
+if node[:stig][:network][:log_suspicious_packets]
+  log_suspicious_packets = 1
+else
+  log_suspicious_packets = 0
+end
+
+if node[:stig][:network][:rfc_source_route_validation]
+  rfc_source_route_validation = 1
+else
+  rfc_source_route_validation = 0
+end
+
 template "/etc/sysctl.conf" do
   source "sysctl.conf.erb"
   owner "root"
   group "root"
   mode 0644
+  variables(
+    :ip_forwarding => ip_forwarding,
+    :send_redirects => send_redirects,
+    :icmp_redirect_accept => icmp_redirect_accept,
+    :log_suspicious_packets => log_suspicious_packets
+    )
+  notifies :run, "execute[sysctl_ip_forward]", :immediately
+  notifies :run, "execute[sysctl_send_redirects]", :immediately
+  notifies :run, "execute[sysctl_icmp_redirect_accept]", :immediately
+  notifies :run, "execute[sysctl_log_suspicious_packets]", :immediately
+  notifies :run, "execute[sysctl_rfc_source_route_validation]", :immediately
+  notifies :run, "execute[sysctl_ipv4_flush]", :immediately
+end
+
+execute "sysctl_ip_forward" do
+  user "root"
+  command "/sbin/sysctl -w net.ipv4.ip_forward=#{ip_forwarding}"
+  action :nothing
+end
+
+execute "sysctl_send_redirects" do
+  user "root"
+  command "/sbin/sysctl -w net.ipv4.conf.all.send_redirects=#{send_redirects}; /sbin/sysctl -w net.ipv4.conf.default.send_redirects=#{send_redirects}"
+  action :nothing
+end
+
+execute "sysctl_icmp_redirect_accept" do
+  user "root"
+  command "/sbin/sysctl -w net.ipv4.conf.all.accept_redirects=#{icmp_redirect_accept}; /sbin/sysctl -w net.ipv4.conf.default.accept_redirects=#{icmp_redirect_accept}"
+  action :nothing
+end
+
+execute "sysctl_log_suspicious_packets" do
+  user "root"
+  command "/sbin/sysctl -w net.ipv4.conf.all.log_martians=#{log_suspicious_packets}; /sbin/sysctl -w net.ipv4.conf.all.log_martians=#{log_suspicious_packets}"
+  action :nothing
+end
+
+execute "sysctl_rfc_source_route_validation" do
+  user "root"
+  command "/sbin/sysctl -w net.ipv4.conf.all.rp_filter=#{rfc_source_route_validation}; /sbin/sysctl -w net.ipv4.conf.default.rp_filter=#{rfc_source_route_validation}"
+  action :nothing
+end
+
+execute "sysctl_ipv4_flush" do
+  user "root"
+  command "/sbin/sysctl -w net.ipv4.route.flush=1"
+  action :nothing
 end

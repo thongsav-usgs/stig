@@ -31,6 +31,29 @@ default['stig']['mail_transfer_agent']['inet_interfaces'] = "localhost"
 # true / false
 default["stig"]["network"]["zeroconf"] = true
 
+# 4.1.1 Disable IP Forwarding
+# false = IP forwarding disabled
+# true = IP forwarding enabled
+default["stig"]["network"]["ip_forwarding"] = false
+
+# 4.1.2 Disable Send Packet Redirects
+# false = Disable redirects
+# true = Enable redirects
+default["stig"]["network"]["packet_redirects"] = false
+
+# 4.2.2 Disable ICMP Redirect Acceptance
+# false = Disable redirect acceptance
+# true = Enable redirect acceptance
+default["stig"]["network"]["icmp_redirect_accept"] = false
+
+# 4.2.4 Log Suspicious Packets
+# true / false
+default["stig"]["network"]["log_suspicious_packets"] = true
+
+# 4.2.7 Enable RFC-recommended Source Route Validation
+# true / false
+default["stig"]["network"]["rfc_source_route_validation"] = true
+
 # 4.4.1 Disable IPv6
 # no = disabled
 # yes = enabled
