@@ -76,6 +76,13 @@
 #  SSH daemon could potentially allow users to bypass security controls
 # (e.g. setting an execution path that has ssh executing trojan’d programs)
 
+# 6.2.13 Limit Access via SSH
+# There are several options available to limit which users and group can
+# access the system via SSH. 
+#
+# Restricting which users can remotely access the system via SSH will
+# help ensure that only authorized users access the system.
+
 if node[:stig][:sshd_config][:ignore_rhosts]
   ignore_rhosts = "yes"
 else
@@ -114,6 +121,7 @@ template "/etc/ssh/sshd_config" do
   variables(
     :log_level => node[:stig][:sshd_config][:log_level],
     :max_auth_tries => node[:stig][:sshd_config][:max_auth_tries],
+    :deny_users => node[:stig][:sshd_config][:deny_users],
     :ignore_rhosts => ignore_rhosts,
     :host_based_auth => host_based_auth,
     :permit_root_login => permit_root_login,

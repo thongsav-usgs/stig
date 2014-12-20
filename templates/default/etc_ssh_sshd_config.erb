@@ -42,8 +42,10 @@ LogLevel <%= @log_level %>
 
 # Authentication:
 
+DenyUsers <%= @deny_users.join(",") %>
+
 #LoginGraceTime 2m
-#PermitRootLogin yes
+PermitRootLogin <%= @permit_root_login %>
 #StrictModes yes
 MaxAuthTries <%= @max_auth_tries %>
 #MaxSessions 10
@@ -69,8 +71,6 @@ IgnoreRhosts <%= @ignore_rhosts %>
 PermitEmptyPasswords <%= @permit_empty_passwords %>
 PasswordAuthentication yes
 
-# The PermitRootLogin parameter specifies if the root user can log in using ssh(1). The default is no.
-PermitRootLogin <%= @permit_root_login %>
 
 # Change to no to disable s/key passwords
 #ChallengeResponseAuthentication yes

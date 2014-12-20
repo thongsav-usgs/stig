@@ -136,3 +136,25 @@ default["stig"]["sshd_config"]["permit_empty_passwords"] = false
 # 6.2.10 Do Not Allow Users to Set Environment Options
 default["stig"]["sshd_config"]["allow_users_set_env_opts"] = false
 
+# 6.2.13 Limit Access via SSH
+default["stig"]["sshd_config"]["deny_users"] = [
+  "bin",
+  "daemon",
+  "adm",
+  "lp",
+  "mail",
+  "uucp",
+  "operator",
+  "games",
+  "gopher",
+  "ftp",
+  "nobody",
+  "vcsa",
+  "rpc",
+  "saslauth",
+  "postfix",
+  "rpcuser",
+  "nfsnobody",
+  "sshd"
+]
+
