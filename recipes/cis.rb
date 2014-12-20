@@ -41,6 +41,17 @@
 # If the protocol is not required, it is recommended that the drivers
 # not be installed to reduce the potential attack surface.
 
+# 4.8.2 Disable SCTP
+# The Stream Control Transmission Protocol (SCTP) is a transport layer
+# protocol used to support message oriented communication, with several
+# streams of messages in one connection. It serves a similar function as
+# TCP and UDP, incorporating features of both. It is message-oriented
+# like UDP, and ensures reliable in-sequence transport of messages with
+# congestion control like TCP.
+#
+# If the protocol is not being used, it is recommended that kernel module
+# not be loaded, disabling the service to reduce the potential attack surface.
+
 template "/etc/modprobe.d/CIS.conf" do
   source "etc_modprobe.d_CIS.conf.erb"
   owner "root"

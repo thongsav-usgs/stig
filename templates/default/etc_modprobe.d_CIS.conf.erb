@@ -34,3 +34,7 @@ install udf /bin/true
 install dccp /bin/true
 <% end -%>
 
+<% if node[:stig][:network][:disable_sctp] -%>
+install sctp /bin/true
+<% end -%>
+

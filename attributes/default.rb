@@ -70,7 +70,12 @@ default["stig"]["network"]["hosts_deny"] = ["ALL"]
 # 4.8.1 Disable DCCP
 # true = disable
 # false = enable
-default["stig"]["network"]["disable_dcpp"] = ["ALL"]
+default["stig"]["network"]["disable_dcpp"] = true
+
+# 4.8.2 Disable SCTP
+# true = disable
+# false = enable
+default["stig"]["network"]["disable_sctp"] = true
 
 # 4.4.1 Disable IPv6
 # no = disabled
