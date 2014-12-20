@@ -61,6 +61,13 @@
 # non-repudiation and provides a clear audit trail in the event of
 # a security incident
 
+# 6.2.9 Set SSH PermitEmptyPasswords to No
+# The PermitEmptyPasswords parameter specifies if the server allows
+# login to accounts with empty password strings.
+#
+# Disallowing remote shell access to accounts that have an empty
+# password reduces the probability of unauthorized access to the system
+
 if node[:stig][:sshd_config][:ignore_rhosts]
   ignore_rhosts = "yes"
 else
@@ -79,6 +86,12 @@ else
   permit_root_login = "no"
 end
 
+if node[:stig][:sshd_config][:permit_empty_passwords]
+  permit_empty_passwords = "yes"
+else
+  permit_empty_passwords = "no"
+end
+
 template "/etc/ssh/sshd_config" do
   source "etc_ssh_sshd_config.erb"
   mode 0600
@@ -89,6 +102,7 @@ template "/etc/ssh/sshd_config" do
     :max_auth_tries => node[:stig][:sshd_config][:max_auth_tries],
     :ignore_rhosts => ignore_rhosts,
     :host_based_auth => host_based_auth,
-    :permit_root_login => permit_root_login
+    :permit_root_login => permit_root_login,
+    :permit_empty_passwords => permit_empty_passwords
   )
 end

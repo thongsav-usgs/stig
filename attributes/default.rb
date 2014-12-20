@@ -130,3 +130,6 @@ default["stig"]["sshd_config"]["host_based_auth"] = false
 # 6.2.8 Disable SSH Root Login
 default["stig"]["sshd_config"]["permit_root_login"] = false
 
+# 6.2.9 Set SSH PermitEmptyPasswords to No
+default["stig"]["sshd_config"]["permit_empty_passwords"] = false
+
