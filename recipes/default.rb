@@ -19,3 +19,17 @@ include_recipe "stig::boot_settings"
 # 1.6.1-3
 include_recipe "stig::proc_hard"
 
+# 1.1.18 - 1.1.24
+include_recipe "stig::mount_disable"
+
+# 3.3
+include_recipe "stig::avahi_daemon"
+
+# 3.5
+include_recipe "stig::packages"
+
+# 3.16
+include_recipe "stig::mail_transfer_agent"
+
+# 4.5.1 - 4.5.4
+include_recipe "stig::hosts"
