@@ -3,8 +3,8 @@ require "spec_helper"
 describe "stig::avahi_daemon" do
   let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
   
-  grep_avahi_daemon_cmd = "/sbin/chkconfig | grep 'avahi-daemon'"
-  grep_zeroconf = "grep -q /NOZEROCONF/i"
+  grep_avahi_daemon_cmd = "/sbin/chkconfig | grep 'avahi-daemon' | grep 'on'"
+  grep_zeroconf = "grep NOZEROCONF -i /etc/sysconfig/network"
   
   before do
     stub_command(grep_avahi_daemon_cmd).and_return(true)

@@ -20,14 +20,14 @@ execute "chkconfig_avahi-daemon_off" do
   user "root"
   command "/sbin/chkconfig avahi-daemon off"
   action :run
-  only_if "/sbin/chkconfig | grep 'avahi-daemon'"
+  only_if "/sbin/chkconfig | grep 'avahi-daemon' | grep 'on'"
 end
 
 ruby_block "insert_line_nozeroconf" do
   block do
     file = Chef::Util::FileEdit.new("/etc/sysconfig/network")
-    file.insert_line_if_no_match("/NOZEROCONF/i", "NOZEROCONF=true")
+    file.insert_line_if_no_match("NOZEROCONF*", "NOZEROCONF=true")
     file.write_file
   end
-  not_if "grep -q /NOZEROCONF/i"
+  not_if "grep NOZEROCONF -i /etc/sysconfig/network"
 end
