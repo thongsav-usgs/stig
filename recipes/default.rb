@@ -51,3 +51,6 @@ include_recipe "stig::system-auth"
 
 # 7.2.1
 include_recipe "stig::login_defs"
+
+# 8.1
+include_recipe "stig::login_banner"
