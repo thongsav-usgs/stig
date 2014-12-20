@@ -158,3 +158,7 @@ default["stig"]["sshd_config"]["deny_users"] = [
   "sshd"
 ]
 
+# 6.3.6 Limit Password Reuse
+# Integer represents the amount of passwords the user is forced to not reuse
+default["stig"]["system_auth"]["pass_reuse_limit"] = 10
+

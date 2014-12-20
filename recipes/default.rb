@@ -43,5 +43,8 @@ include_recipe "stig::logrotate"
 # 6.1.3 - 6.1.10
 include_recipe "stig::file_permissions"
 
-# 6.2.2
+# 6.2.2 - 6.2.13
 include_recipe "stig::sshd_config"
+
+# 6.3.6
+include_recipe "stig::system-auth"
