@@ -52,6 +52,19 @@ end
 # Enabling this feature and logging these packets allows an administrator to investigate the
 # possibility that an attacker is sending spoofed packets to their server.
 
+# 4.2.7 Enable RFC-recommended Source Route Validation
+# Setting net.ipv4.conf.all.rp_filter and net.ipv4.conf.default.rp_filter to 1 forces the
+# Linux kernel to utilize reverse path filtering on a received packet to determine if the
+# packet was valid. Essentially, with reverse path filtering, if the return packet does
+# not go out the same interface that the corresponding source packet came from, the packet
+# is dropped (and logged if log_martians is set).
+#
+# Setting these flags is a good way to deter attackers from sending your server bogus
+# packets that cannot be responded to. One instance where this feature breaks down is
+# if asymmetrical routing is employed. This is would occur when using dynamic routing
+# protocols (bgp, ospf, etc) on your system. If you are using asymmetrical routing on
+# your server, you will not be able to enable this feature without breaking the routing.
+
 template "/etc/sysctl.conf" do
   source "sysctl.conf.erb"
   owner "root"
