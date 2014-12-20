@@ -26,3 +26,12 @@ default['stig']['mount_disable']['udf'] = true
 # 3.16 Configure Mail Transfer Agent for Local-Only Mode
 # If the system is intended to be a mail server, change from "localhost"
 default['stig']['mail_transfer_agent']['inet_interfaces'] = "localhost"
+
+# 3.3 Disable Avahi Server
+# true / false
+default["stig"]["network"]["zeroconf"] = true
+
+# 4.4.1 Disable IPv6
+# no = disabled
+# yes = enabled
+default["stig"]["network"]["ipv6"] = "no"

@@ -1,0 +1,5 @@
+NETWORKING=yes
+HOSTNAME=<%= node[:fqdn ]%>
+NOZEROCONF=<%= node[:stig][:network][:zeroconf]%>
+NETWORKING_IPV6=<%= node[:stig][:network][:ipv6] %>
+IPV6INIT=<%= node[:stig][:network][:ipv6] %>

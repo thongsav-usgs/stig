@@ -15,6 +15,13 @@
 # attack surface. If for some reason the service is required on
 # the server, follow the recommendations in sub-sections
 # 3.2.1 - 3.2.5 to secure it.
+#
+# 4.4.1 Disable IPv6
+# Although IPv6 has many advantages over IPv4, few organizations
+# have implemented IPv6.
+#
+# If IPv6 is not to be used, it is recommended that it be disabled
+# to reduce the attack surface of the system.
 
 execute "chkconfig_avahi-daemon_off" do
   user "root"
@@ -23,11 +30,33 @@ execute "chkconfig_avahi-daemon_off" do
   only_if "/sbin/chkconfig | grep 'avahi-daemon' | grep 'on'"
 end
 
-ruby_block "insert_line_nozeroconf" do
-  block do
-    file = Chef::Util::FileEdit.new("/etc/sysconfig/network")
-    file.insert_line_if_no_match("NOZEROCONF*", "NOZEROCONF=true")
-    file.write_file
-  end
-  not_if "grep NOZEROCONF -i /etc/sysconfig/network"
+template "/etc/sysconfig/network" do
+  source "etc_sysconfig_network.erb"
+  user "root"
+  group "root"
+  mode 0644
 end
+
+if node[:stig][:network][:ipv6] == "no"
+  ipv6 = 1
+  ipv6OnOff = "off"
+else
+  ipv6 = 0
+  ipv6OnOff = "on"
+end
+
+template "/etc/modprobe.d/ipv6.conf" do
+  source "etc_modprobe.d_ipv6.conf.erb"
+  user "root"
+  group "root"
+  mode 0644
+  variables(:ipv6 => ipv6)
+  notifies :run, "execute[chkconfig_ip6tables_off]", :immediately
+end
+
+execute "chkconfig_ip6tables_off" do
+  user "root"
+  command "/sbin/chkconfig ip6tables #{ipv6OnOff}"
+  action :nothing
+end
+
