@@ -168,3 +168,6 @@ default["stig"]["login_defs"]["pass_max_days"] = 60
 # 7.2.2 Set Password Change Minimum Number of Days
 default["stig"]["login_defs"]["pass_min_days"] = 1
 
+# 7.2.3 Set Password Expiring Warning Days
+default["stig"]["login_defs"]["pass_warn_age"] = 15
+

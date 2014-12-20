@@ -25,6 +25,16 @@
 # can prevent users from repeatedly changing their password in
 # an attempt to circumvent password reuse controls.
 
+# 7.2.3 Set Password Expiring Warning Days
+# The PASS_WARN_AGE parameter in /etc/login.defs allows an administrator
+# to notify users that their password will expire in a defined number
+# of days. It is recommended that the PASS_WARN_AGE parameter be set
+# to 7 or more days.
+#
+# Providing an advance warning that a password will be expiring gives
+# users time to think of a secure password. Users caught unaware may
+# choose a simple password or write it down where it may be discovered.
+
 template "/etc/login.defs" do
   source "etc_login.defs.erb"
   owner "root"
@@ -32,6 +42,7 @@ template "/etc/login.defs" do
   mode 0644
   variables(
     :pass_max_days => node[:stig][:login_defs][:pass_max_days],
-    :pass_min_days => node[:stig][:login_defs][:pass_min_days]
+    :pass_min_days => node[:stig][:login_defs][:pass_min_days],
+    :pass_warn_age => node[:stig][:login_defs][:pass_warn_age]
   )
 end
