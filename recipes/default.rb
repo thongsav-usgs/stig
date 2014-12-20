@@ -36,3 +36,5 @@ include_recipe "stig::hosts"
 
 # 5.1.3
 include_recipe "stig::rsyslog"
+
+include_recipe "stig::logrotate"

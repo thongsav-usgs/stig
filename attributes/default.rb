@@ -100,6 +100,16 @@ default["stig"]["logging"]["rsyslog_rules"] = [
   "local7.*    /var/log/boot.log"
 ]
 
+# 5.3 Configure logrotate
+default["stig"]["logging"]["logrotate_items"] = [
+  "/var/log/cron",
+  "/var/log/maillog",
+  "/var/log/messages",
+  "/var/log/secure",
+  "/var/log/spooler",
+  "/var/log/boot.log"
+]
+
 # 4.4.1 Disable IPv6
 # no = disabled
 # yes = enabled

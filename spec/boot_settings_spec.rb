@@ -5,7 +5,7 @@ describe "stig::boot_settings" do
 
     it "creates /boot/grub/grub.conf template" do
       expect(chef_run).to create_template("/boot/grub/grub.conf").with(
-        source: "grub.conf.erb",
+        source: "etc_grub.conf.erb",
         owner: "root",
         group: "root",
         mode: 0600,
@@ -24,7 +24,7 @@ describe "stig::boot_settings" do
     
     it "creates /etc/audit/auditd.conf template" do
       expect(chef_run).to create_template("/etc/audit/auditd.conf").with(
-        source: "auditd.conf.erb",
+        source: "etc_audit_auditd.conf.erb",
         owner: "root",
         group: "root",
         mode: 0640,
