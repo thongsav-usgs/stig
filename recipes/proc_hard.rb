@@ -36,6 +36,22 @@ end
 # devices in an attempt to corrupt routing and have users access a system set up by the
 # attacker as opposed to a valid system.
 
+# 4.2.2 Disable ICMP Redirect Acceptance
+# ICMP redirect messages are packets that convey routing information and tell your host
+# (acting as a router) to send packets via an alternate path. It is a way of allowing an
+# outside routing device to update your system routing tables. By
+# setting net.ipv4.conf.all.accept_redirects to 0, the system will not accept any ICMP
+# redirect messages, and therefore, won’t allow outsiders to update the system’s routing tables.
+#
+# Attackers could use bogus ICMP redirect messages to maliciously alter the system routing
+# tables and get them to send packets to incorrect networks and allow your system packets to be captured.
+
+# 4.2.4 Log Suspicious Packets
+# When enabled, this feature logs packets with un-routable source addresses to the kernel log.
+#
+# Enabling this feature and logging these packets allows an administrator to investigate the
+# possibility that an attacker is sending spoofed packets to their server.
+
 template "/etc/sysctl.conf" do
   source "sysctl.conf.erb"
   owner "root"
