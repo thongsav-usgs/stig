@@ -59,6 +59,17 @@ default["stig"]["network"]["rfc_source_route_validation"] = true
 # true = Enable redirect acceptance
 default["stig"]["network"]["ipv6_redirect_accept"] = false
 
+# 4.5.1 Create /etc/hosts.allow
+# An array of <net>/<mask> combinations or "ALL"
+default["stig"]["network"]["hosts_allow"] = [
+  "192.168.0.1/255.255.255.0",
+  "192.168.1.1/255.255.255.0"
+]
+
+# 4.5.3 Create /etc/hosts.deny
+# An array of <net>/<mask> combinations or "ALL"
+default["stig"]["network"]["hosts_deny"] = ["ALL"]
+
 # 4.4.1 Disable IPv6
 # no = disabled
 # yes = enabled
