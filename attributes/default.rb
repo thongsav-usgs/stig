@@ -133,3 +133,6 @@ default["stig"]["sshd_config"]["permit_root_login"] = false
 # 6.2.9 Set SSH PermitEmptyPasswords to No
 default["stig"]["sshd_config"]["permit_empty_passwords"] = false
 
+# 6.2.10 Do Not Allow Users to Set Environment Options
+default["stig"]["sshd_config"]["allow_users_set_env_opts"] = false
+

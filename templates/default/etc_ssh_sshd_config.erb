@@ -121,7 +121,7 @@ X11Forwarding yes
 #TCPKeepAlive yes
 #UseLogin no
 #UsePrivilegeSeparation yes
-#PermitUserEnvironment no
+PermitUserEnvironment <%= @allow_users_set_env_opts %>
 #Compression delayed
 #ClientAliveInterval 0
 #ClientAliveCountMax 3

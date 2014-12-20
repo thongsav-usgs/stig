@@ -68,6 +68,14 @@
 # Disallowing remote shell access to accounts that have an empty
 # password reduces the probability of unauthorized access to the system
 
+# 6.2.10 Do Not Allow Users to Set Environment Options
+# The PermitUserEnvironment option allows users to present environment
+# options to the ssh daemon.
+#
+# Permitting users the ability to set environment variables through the
+#  SSH daemon could potentially allow users to bypass security controls
+# (e.g. setting an execution path that has ssh executing trojan’d programs)
+
 if node[:stig][:sshd_config][:ignore_rhosts]
   ignore_rhosts = "yes"
 else
@@ -92,6 +100,12 @@ else
   permit_empty_passwords = "no"
 end
 
+if node[:stig][:sshd_config][:allow_users_set_env_opts]
+  allow_users_set_env_opts = "yes"
+else
+  allow_users_set_env_opts = "no"
+end
+
 template "/etc/ssh/sshd_config" do
   source "etc_ssh_sshd_config.erb"
   mode 0600
@@ -103,6 +117,7 @@ template "/etc/ssh/sshd_config" do
     :ignore_rhosts => ignore_rhosts,
     :host_based_auth => host_based_auth,
     :permit_root_login => permit_root_login,
-    :permit_empty_passwords => permit_empty_passwords
+    :permit_empty_passwords => permit_empty_passwords,
+    :allow_users_set_env_opts => allow_users_set_env_opts
   )
 end
