@@ -32,6 +32,15 @@
 # filesystem type is necessary to support writing DVDs and newer optical 
 # disc formats.
 
+# 4.8.1 Disable DCCP
+# The Datagram Congestion Control Protocol (DCCP) is a transport layer
+# protocol that supports streaming media and telephony. DCCP provides
+# a way to gain access to congestion control, without having to do it
+# at the application layer, but does not provide in- sequence delivery.
+#
+# If the protocol is not required, it is recommended that the drivers
+# not be installed to reduce the potential attack surface.
+
 template "/etc/modprobe.d/CIS.conf" do
   source "etc_modprobe.d_CIS.conf.erb"
   owner "root"

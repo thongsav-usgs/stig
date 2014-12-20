@@ -29,3 +29,8 @@ install squashfs /bin/true
 <% if node[:stig][:mount_disable][:udf] -%>
 install udf /bin/true
 <% end -%>
+
+<% if node[:stig][:network][:disable_dcpp] -%>
+install dccp /bin/true
+<% end -%>
+

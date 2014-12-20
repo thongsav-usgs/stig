@@ -67,6 +67,11 @@ default["stig"]["network"]["hosts_allow"] = ["ALL"]
 # An array of <net>/<mask> combinations or "ALL"
 default["stig"]["network"]["hosts_deny"] = ["ALL"]
 
+# 4.8.1 Disable DCCP
+# true = disable
+# false = enable
+default["stig"]["network"]["disable_dcpp"] = ["ALL"]
+
 # 4.4.1 Disable IPv6
 # no = disabled
 # yes = enabled
