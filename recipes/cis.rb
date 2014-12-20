@@ -1,3 +1,7 @@
+# Cookbook Name:: stig
+# Recipe:: hosts
+# Author: Ivan Suftin <isuftin@usgs.gov>
+
 # 1.1.18 Disable Mounting of cramfs Filesystems
 # The cramfs filesystem type is a compressed read-only Linux 
 # filesystem embedded in small footprint systems. A cramfs 
