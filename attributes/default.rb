@@ -88,6 +88,11 @@ default["stig"]["network"]["disable_rds"] = true
 # false = enable
 default["stig"]["network"]["disable_tipc"] = true
 
+# 4.4.1 Disable IPv6
+# no = disabled
+# yes = enabled
+default["stig"]["network"]["ipv6"] = "no"
+
 # 5.1.3 Configure /etc/rsyslog.conf
 # Include rules for logging in array with space separating rule with log location
 default["stig"]["logging"]["rsyslog_rules"] = [
@@ -110,7 +115,6 @@ default["stig"]["logging"]["logrotate_items"] = [
   "/var/log/boot.log"
 ]
 
-# 4.4.1 Disable IPv6
-# no = disabled
-# yes = enabled
-default["stig"]["network"]["ipv6"] = "no"
+# 6.2.2 Set LogLevel to INFO
+default["stig"]["logging"]["log_level"] = "INFO"
+
