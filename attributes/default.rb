@@ -162,3 +162,6 @@ default["stig"]["sshd_config"]["deny_users"] = [
 # Integer represents the amount of passwords the user is forced to not reuse
 default["stig"]["system_auth"]["pass_reuse_limit"] = 10
 
+# 7.2.1 Set Password Expiration Days
+default["stig"]["login_defs"]["pass_max_days"] = 60
+

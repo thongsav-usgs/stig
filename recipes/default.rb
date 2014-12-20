@@ -48,3 +48,6 @@ include_recipe "stig::sshd_config"
 
 # 6.3.6
 include_recipe "stig::system-auth"
+
+# 7.2.1
+include_recipe "stig::login_defs"

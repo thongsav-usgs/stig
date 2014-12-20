@@ -1,5 +1,5 @@
 # Cookbook Name:: stig
-# Recipe:: sshd_config
+# Recipe:: system-auth
 # Author: Ivan Suftin <isuftin@usgs.gov>
 
 # 6.3.6 Limit Password Reuse
