@@ -87,6 +87,18 @@ default["stig"]["network"]["disable_rds"] = true
 # false = enable
 default["stig"]["network"]["disable_tipc"] = true
 
+# 5.1.3 Configure /etc/rsyslog.conf
+# Include rules for logging in array with space separating rule with log location
+default["stig"]["logging"]["rsyslog_rules"] = [
+  "*.info;mail.none;authpriv.none;cron.none   /var/log/messages",
+  "authpriv.*   /var/log/secure",
+  "mail.*   -/var/log/maillog",
+  "cron.*   /var/log/cron",
+  "*.emerg   *",
+  "uucp,news.crit   /var/log/spooler",
+  "local7.*    /var/log/boot.log"
+]
+
 # 4.4.1 Disable IPv6
 # no = disabled
 # yes = enabled

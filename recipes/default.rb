@@ -33,3 +33,6 @@ include_recipe "stig::mail_transfer_agent"
 
 # 4.5.1 - 4.5.4
 include_recipe "stig::hosts"
+
+# 5.1.3
+include_recipe "stig::rsyslog"
