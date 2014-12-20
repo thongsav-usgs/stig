@@ -51,6 +51,16 @@
 # /etc/pam.conf, disabling the ability to use .rhosts files in SSH
 # provides an additional layer of protection .
 
+# 6.2.8 Disable SSH Root Login
+# The PermitRootLogin parameter specifies if the root user can log in
+# using ssh(1). The default is no.
+#
+# Disallowing root logins over SSH requires server admins to
+# authenticate using their own individual account, then escalating
+# to root via sudo or su. This in turn limits opportunity for
+# non-repudiation and provides a clear audit trail in the event of
+# a security incident
+
 if node[:stig][:sshd_config][:ignore_rhosts]
   ignore_rhosts = "yes"
 else
@@ -63,6 +73,12 @@ else
   host_based_auth = "no"
 end
 
+if node[:stig][:sshd_config][:permit_root_login]
+  permit_root_login = "yes"
+else
+  permit_root_login = "no"
+end
+
 template "/etc/ssh/sshd_config" do
   source "etc_ssh_sshd_config.erb"
   mode 0600
@@ -72,6 +88,7 @@ template "/etc/ssh/sshd_config" do
     :log_level => node[:stig][:sshd_config][:log_level],
     :max_auth_tries => node[:stig][:sshd_config][:max_auth_tries],
     :ignore_rhosts => ignore_rhosts,
-    :host_based_auth => host_based_auth
+    :host_based_auth => host_based_auth,
+    :permit_root_login => permit_root_login
   )
 end

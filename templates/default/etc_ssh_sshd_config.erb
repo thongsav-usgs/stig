@@ -69,6 +69,9 @@ IgnoreRhosts <%= @ignore_rhosts %>
 #PermitEmptyPasswords no
 PasswordAuthentication yes
 
+# The PermitRootLogin parameter specifies if the root user can log in using ssh(1). The default is no.
+PermitRootLogin <%= @permit_root_login %>
+
 # Change to no to disable s/key passwords
 #ChallengeResponseAuthentication yes
 ChallengeResponseAuthentication no

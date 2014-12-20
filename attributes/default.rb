@@ -127,3 +127,6 @@ default["stig"]["sshd_config"]["ignore_rhosts"] = true
 # 6.2.7 Set SSH HostbasedAuthentication to No
 default["stig"]["sshd_config"]["host_based_auth"] = false
 
+# 6.2.8 Disable SSH Root Login
+default["stig"]["sshd_config"]["permit_root_login"] = false
+
