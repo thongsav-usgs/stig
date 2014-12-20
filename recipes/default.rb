@@ -25,3 +25,5 @@ include_recipe "stig::mount_disable"
 # 3.3
 include_recipe "stig::avahi_daemon"
 
+# 3.5
+include_recipe "stig::packages"
