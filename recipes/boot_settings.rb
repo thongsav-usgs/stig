@@ -9,6 +9,14 @@
 # Requiring a boot password upon execution of the boot loader will prevent an 
 # unauthorized user from entering boot parameters or changing the boot partition.
 # This prevents users from weakening security (e.g. turning off SELinux at boot time).
+#
+# 1.5.4 Require Authentication for Single-User Mode. Since /etc/init determines 
+# what run state the system is in, setting the entry in /etc/sysconfig/init will 
+# force single user authentication.
+#
+# 1.5.5 Disable Interactive Boot. The PROMPT option provides console users the 
+# ability to interactively boot the system and select which services to start on 
+# boot. Set the PROMPT parameter in /etc/sysconfig/init to no. PROMPT=no
 
 # Also applies CIS 4.2.3
 template "/boot/grub/grub.conf" do
@@ -19,39 +27,11 @@ template "/boot/grub/grub.conf" do
   sensitive true
 end
 
-# 1.5.4 Require Authentication for Single-User Mode. Since /etc/init determines 
-# what run state the system is in, setting the entry in /etc/sysconfig/init will 
-# force single user authentication.
-
-ruby_block "insert_line_sulogin" do
-  block do
-    file = Chef::Util::FileEdit.new("/etc/sysconfig/init")
-    file.insert_line_if_no_match("/SINGLE/s/sushell/sulogin/", "/SINGLE/s/sushell/sulogin/")
-    file.write_file
-  end
-  not_if "grep -q /SINGLE/s/sushell/sulogin/ /etc/sysconfig/init"
-end
-
-ruby_block "insert_line_prompt" do
-  block do
-    file = Chef::Util::FileEdit.new("/etc/sysconfig/init")
-    file.insert_line_if_no_match("/PROMPT/s/yes/no/", "/PROMPT/s/yes/no/")
-    file.write_file
-  end
-  not_if "grep -q /PROMPT/s/yes/no/ /etc/sysconfig/init"
-end
-
-# 1.5.5 Disable Interactive Boot. The PROMPT option provides console users the 
-# ability to interactively boot the system and select which services to start on 
-# boot. Set the PROMPT parameter in /etc/sysconfig/init to no. PROMPT=no
-
-ruby_block "set_prompt_no" do
-  block do
-    file = Chef::Util::FileEdit.new("/etc/sysconfig/init")
-    file.search_file_replace_line("PROMPT=yes", "PROMPT=no")
-    file.write_file
-  end
-  not_if "grep -q PROMPT=no /etc/sysconfig/init"
+template "/etc/sysconfig/init" do
+  source "init.erb"
+  owner "root"
+  group "root"
+  mode 0644
 end
 
 # 4.2.1-3

@@ -27,3 +27,6 @@ include_recipe "stig::avahi_daemon"
 
 # 3.5
 include_recipe "stig::packages"
+
+# 3.16
+include_recipe "stig::mail_transfer_agent"

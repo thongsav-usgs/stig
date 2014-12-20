@@ -22,3 +22,7 @@ default['stig']['mount_disable']['hfs'] = true
 default['stig']['mount_disable']['hfsplus'] = true
 default['stig']['mount_disable']['squashfs'] = true
 default['stig']['mount_disable']['udf'] = true
+
+# 3.16 Configure Mail Transfer Agent for Local-Only Mode
+# If the system is intended to be a mail server, change from "localhost"
+default['stig']['mail_transfer_agent']['inet_interfaces'] = "localhost"
