@@ -77,6 +77,11 @@ default["stig"]["network"]["disable_dcpp"] = true
 # false = enable
 default["stig"]["network"]["disable_sctp"] = true
 
+# 4.8.3 Disable RDS
+# true = disable
+# false = enable
+default["stig"]["network"]["disable_rds"] = true
+
 # 4.4.1 Disable IPv6
 # no = disabled
 # yes = enabled

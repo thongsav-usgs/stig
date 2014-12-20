@@ -38,3 +38,7 @@ install dccp /bin/true
 install sctp /bin/true
 <% end -%>
 
+<% if node[:stig][:network][:disable_rds] -%>
+install rds /bin/true
+<% end -%>
+
