@@ -165,3 +165,6 @@ default["stig"]["system_auth"]["pass_reuse_limit"] = 10
 # 7.2.1 Set Password Expiration Days
 default["stig"]["login_defs"]["pass_max_days"] = 60
 
+# 7.2.2 Set Password Change Minimum Number of Days
+default["stig"]["login_defs"]["pass_min_days"] = 1
+
