@@ -121,3 +121,6 @@ default["stig"]["sshd_config"]["log_level"] = "INFO"
 # 6.2.5 Set SSH MaxAuthTries to 4 or Less
 default["stig"]["sshd_config"]["max_auth_tries"] = 3
 
+# 6.2.6 Set SSH IgnoreRhosts to Yes
+default["stig"]["sshd_config"]["ignore_rhosts"] = true
+

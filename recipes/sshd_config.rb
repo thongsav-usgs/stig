@@ -35,6 +35,16 @@
 # risk of successful brute force attacks to the SSH server. While the
 # recommended setting is 4, it is set the number based on site policy.
 
+# 6.2.6 Set SSH IgnoreRhosts to Yes
+# The IgnoreRhosts parameter specifies that .rhosts and .shosts files
+# will not be used in RhostsRSAAuthentication or HostbasedAuthentication.
+
+if node[:stig][:sshd_config][:ignore_rhosts]
+  ignore_rhosts = "yes"
+else
+  ignore_rhosts = "no"
+end
+
 template "/etc/ssh/sshd_config" do
   source "etc_ssh_sshd_config.erb"
   mode 0600
@@ -42,6 +52,7 @@ template "/etc/ssh/sshd_config" do
   group "root"
   variables(
     :log_level => node[:stig][:sshd_config][:log_level],
-    :max_auth_tries => node[:stig][:sshd_config][:max_auth_tries]
+    :max_auth_tries => node[:stig][:sshd_config][:max_auth_tries],
+    :ignore_rhosts => ignore_rhosts
   )
 end
