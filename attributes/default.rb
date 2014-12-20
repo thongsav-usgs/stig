@@ -116,5 +116,8 @@ default["stig"]["logging"]["logrotate_items"] = [
 ]
 
 # 6.2.2 Set LogLevel to INFO
-default["stig"]["logging"]["log_level"] = "INFO"
+default["stig"]["sshd_config"]["log_level"] = "INFO"
+
+# 6.2.5 Set SSH MaxAuthTries to 4 or Less
+default["stig"]["sshd_config"]["max_auth_tries"] = 3
 
