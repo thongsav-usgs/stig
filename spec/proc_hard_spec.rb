@@ -40,6 +40,10 @@ describe "stig::proc_hard" do
       expect(chef_run).to_not run_execute('sysctl_rfc_source_route_validation')
     end
     
+    it 'excludes sysctl_ipv6_redirect_accept execution due to :nothing guard' do
+      expect(chef_run).to_not run_execute('sysctl_ipv6_redirect_accept')
+    end
+    
     it 'excludes sysctl_ipv4_flush execution due to :nothing guard' do
       expect(chef_run).to_not run_execute('sysctl_ipv4_flush')
     end

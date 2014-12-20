@@ -65,6 +65,14 @@ end
 # protocols (bgp, ospf, etc) on your system. If you are using asymmetrical routing on
 # your server, you will not be able to enable this feature without breaking the routing.
 
+# 4.4.2.2 Disable IPv6 Redirect Acceptance
+# This setting prevents the system from accepting ICMP redirects. ICMP redirects tell
+# the system about alternate routes for sending traffic.
+#
+# It is recommended that systems not accept ICMP redirects as they could be tricked
+# into routing traffic to compromised machines. Setting hard routes within the system
+# (usually a single default route to a trusted router) protects the system from bad routes.
+
 if node[:stig][:network][:ip_forwarding]
   ip_forwarding = 1
 else
@@ -95,6 +103,12 @@ else
   rfc_source_route_validation = 0
 end
 
+if node[:stig][:network][:ipv6_redirect_accept]
+  ipv6_redirect_accept = 1
+else
+  ipv6_redirect_accept = 0
+end
+
 template "/etc/sysctl.conf" do
   source "sysctl.conf.erb"
   owner "root"
@@ -104,7 +118,9 @@ template "/etc/sysctl.conf" do
     :ip_forwarding => ip_forwarding,
     :send_redirects => send_redirects,
     :icmp_redirect_accept => icmp_redirect_accept,
-    :log_suspicious_packets => log_suspicious_packets
+    :log_suspicious_packets => log_suspicious_packets,
+    :rfc_source_route_validation => rfc_source_route_validation,
+    :ipv6_redirect_accept => ipv6_redirect_accept
     )
   notifies :run, "execute[sysctl_ip_forward]", :immediately
   notifies :run, "execute[sysctl_send_redirects]", :immediately
@@ -141,6 +157,12 @@ end
 execute "sysctl_rfc_source_route_validation" do
   user "root"
   command "/sbin/sysctl -w net.ipv4.conf.all.rp_filter=#{rfc_source_route_validation}; /sbin/sysctl -w net.ipv4.conf.default.rp_filter=#{rfc_source_route_validation}"
+  action :nothing
+end
+
+execute "sysctl_ipv6_redirect_accept" do
+  user "root"
+  command "/sbin/sysctl -w net.ipv6.conf.default.accept_redirects=#{ipv6_redirect_accept}; /sbin/sysctl -w net.ipv6.route.flush=#{ipv6_redirect_accept}"
   action :nothing
 end
 

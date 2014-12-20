@@ -13,6 +13,8 @@ net.ipv4.conf.all.log_martians = <%= @log_suspicious_packets %>
 net.ipv4.conf.default.log_martians = <%= @log_suspicious_packets %>
 net.ipv4.conf.all.rp_filter = <%= @rfc_source_route_validation %>
 net.ipv4.conf.default.rp_filter = <%= @rfc_source_route_validation %>
+net.ipv6.conf.all.accept_redirects = <%= @ipv6_redirect_accept %>
+net.ipv6.conf.default.accept_redirects = <%= @ipv6_redirect_accept %>
 
 # Controls source route verification
 net.ipv4.conf.default.rp_filter = 1

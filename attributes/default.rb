@@ -54,6 +54,11 @@ default["stig"]["network"]["log_suspicious_packets"] = true
 # true / false
 default["stig"]["network"]["rfc_source_route_validation"] = true
 
+# 4.4.2.2 Disable IPv6 Redirect Acceptance
+# false = Disable redirect acceptance
+# true = Enable redirect acceptance
+default["stig"]["network"]["ipv6_redirect_accept"] = false
+
 # 4.4.1 Disable IPv6
 # no = disabled
 # yes = enabled
