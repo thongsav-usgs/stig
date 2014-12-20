@@ -20,7 +20,7 @@ include_recipe "stig::boot_settings"
 include_recipe "stig::proc_hard"
 
 # 1.1.18 - 1.1.24
-include_recipe "stig::mount_disable"
+include_recipe "stig::cis"
 
 # 3.3
 include_recipe "stig::avahi_daemon"

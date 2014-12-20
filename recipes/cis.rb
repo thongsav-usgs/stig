@@ -33,7 +33,7 @@
 # disc formats.
 
 template "/etc/modprobe.d/CIS.conf" do
-  source "CIS.conf.erb"
+  source "etc_modprobe.d_CIS.conf.erb"
   owner "root"
   group "root"
   mode 0644
