@@ -2,7 +2,8 @@
 default['stig']['grub']['hashedpassword'] = "$1$ifTCDC.V$0VpmYkffVbzFkE8ElJrWU/" # Hashed "ChangeMe"
 
 # 4.2.1.1 Configure Audit Log Storage Size (Not Scored)
-default['stig']['auditd']['max_log_file'] = "6" #MB
+# In megabyte
+default['stig']['auditd']['max_log_file'] = "25" 
 # CIS 4.2.1.2 Disable System on Audit Log Full (Not Scored)
 default['stig']['auditd']['space_left_action'] = "email"
 default['stig']['auditd']['action_mail_acct'] = "root"
