@@ -38,11 +38,29 @@
 # 6.2.6 Set SSH IgnoreRhosts to Yes
 # The IgnoreRhosts parameter specifies that .rhosts and .shosts files
 # will not be used in RhostsRSAAuthentication or HostbasedAuthentication.
+#
+# Setting this parameter forces users to enter a password when authenticating with ssh.
+
+# 6.2.7 Set SSH HostbasedAuthentication to No
+# The HostbasedAuthentication parameter specifies if authentication is 
+# allowed through trusted hosts via the user of .rhosts, or /etc/hosts.equiv,
+# along with successful public key client host authentication. This option
+# only applies to SSH Protocol Version 2.
+#
+# Even though the .rhosts files are ineffective if support is disabled in
+# /etc/pam.conf, disabling the ability to use .rhosts files in SSH
+# provides an additional layer of protection .
 
 if node[:stig][:sshd_config][:ignore_rhosts]
   ignore_rhosts = "yes"
 else
   ignore_rhosts = "no"
+end
+
+if node[:stig][:sshd_config][:host_based_auth]
+  host_based_auth = "yes"
+else
+  host_based_auth = "no"
 end
 
 template "/etc/ssh/sshd_config" do
@@ -53,6 +71,7 @@ template "/etc/ssh/sshd_config" do
   variables(
     :log_level => node[:stig][:sshd_config][:log_level],
     :max_auth_tries => node[:stig][:sshd_config][:max_auth_tries],
-    :ignore_rhosts => ignore_rhosts
+    :ignore_rhosts => ignore_rhosts,
+    :host_based_auth => host_based_auth
   )
 end

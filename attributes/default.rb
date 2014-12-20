@@ -124,3 +124,6 @@ default["stig"]["sshd_config"]["max_auth_tries"] = 3
 # 6.2.6 Set SSH IgnoreRhosts to Yes
 default["stig"]["sshd_config"]["ignore_rhosts"] = true
 
+# 6.2.7 Set SSH HostbasedAuthentication to No
+default["stig"]["sshd_config"]["host_based_auth"] = false
+
