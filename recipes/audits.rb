@@ -119,6 +119,13 @@ bash "no UID 0 except root account exists" do
   only_if "/bin/cat /etc/passwd | /bin/awk -F: '($3 == 0) { print $1 }' | grep -v \"root\"", :user => "root"
 end
 
+# Generate audit directory in /root
+directory "/root/.audit" do
+  owner "root"
+  group "root"
+  mode 0600
+end
+
 # 9.2.6 Ensure root PATH Integrity
 # The root user can execute any command on the
 # system and could be fooled into executing programs
@@ -132,7 +139,7 @@ end
 cookbook_file "path_integrity_check.sh" do
   user "root"
   group "root"
-  path "/root/path_integrity_check.sh"
+  path "/root/.audit/path_integrity_check.sh"
   mode 0700
 end
 
@@ -149,7 +156,7 @@ end
 cookbook_file "rhosts_check.sh" do
   user "root"
   group "root"
-  path "/root/rhosts_check.sh"
+  path "/root/.audit/rhosts_check.sh"
   mode 0700
 end
 
@@ -164,6 +171,20 @@ end
 cookbook_file "check_groups_in_etc_passwd.sh" do
   user "root"
   group "root"
-  path "/root/check_groups_in_etc_passwd.sh"
+  path "/root/.audit/check_groups_in_etc_passwd.sh"
+  mode 0700
+end
+
+# 9.2.12 Check That Users Are Assigned Valid Home Directories
+# Users can be defined in /etc/passwd without a home directory
+# or with a home directory does not actually exist.
+#
+# If the user's home directory does not exist or is unassigned,
+# the user will be placed in "/" and will not be able to write
+# any files or have local environment variables set.
+cookbook_file "validate_users_homedirs.sh" do
+  user "root"
+  group "root"
+  path "/root/.audit/validate_users_homedirs.sh"
   mode 0700
 end

@@ -91,27 +91,44 @@ describe "stig::audits" do
     )
   end
   
-  it "creates /root/path_integrity_check.sh file" do
+  it "creates an .audit sub directory in /root" do
+    expect(chef_run).to create_directory("/root/.audit").with(
+    owner: "root",
+    group: "root",
+    mode: 0600
+    )
+  end
+  
+  it "creates /root/.audit/path_integrity_check.sh file" do
     expect(chef_run).to create_cookbook_file("path_integrity_check.sh").with(
-      path: "/root/path_integrity_check.sh",
+      path: "/root/.audit/path_integrity_check.sh",
       owner: "root",
       group: "root",
       mode: 0700
     )
   end
   
-  it "creates /root/rhosts_check.sh file" do
+  it "creates /root/.audit/rhosts_check.sh file" do
     expect(chef_run).to create_cookbook_file("rhosts_check.sh").with(
-      path: "/root/rhosts_check.sh",
+      path: "/root/.audit/rhosts_check.sh",
       owner: "root",
       group: "root",
       mode: 0700
     )
   end
   
-  it "creates /root/check_groups_in_etc_passwd.sh file" do
+  it "creates /root/.audit/check_groups_in_etc_passwd.sh file" do
     expect(chef_run).to create_cookbook_file("check_groups_in_etc_passwd.sh").with(
-      path: "/root/check_groups_in_etc_passwd.sh",
+      path: "/root/.audit/check_groups_in_etc_passwd.sh",
+      owner: "root",
+      group: "root",
+      mode: 0700
+    )
+  end
+  
+  it "creates /root/.audit/validate_users_homedirs.sh file" do
+    expect(chef_run).to create_cookbook_file("validate_users_homedirs.sh").with(
+      path: "/root/.audit/validate_users_homedirs.sh",
       owner: "root",
       group: "root",
       mode: 0700
