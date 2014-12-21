@@ -202,3 +202,17 @@ cookbook_file "check_duplicate_uid.sh" do
   path "/root/.audit/check_duplicate_uid.sh"
   mode 0700
 end
+
+# 9.2.16 Check for Duplicate GIDs
+# Although the groupadd program will not let you create a duplicate
+# Group ID (GID), it is possible for an administrator to manually
+# edit the /etc/group file and change the GID field.
+#
+# User groups must be assigned unique GIDs for accountability and
+# to ensure appropriate access protections.
+cookbook_file "check_duplicate_gid.sh" do
+  user "root"
+  group "root"
+  path "/root/.audit/check_duplicate_gid.sh"
+  mode 0700
+end
