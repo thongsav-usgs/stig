@@ -54,3 +54,5 @@ include_recipe "stig::login_banner"
 
 # 6.1.3 - 6.1.10, 9.1.1 - 9.1.8
 include_recipe "stig::file_permissions"
+
+include_recipe "stig::audits"
