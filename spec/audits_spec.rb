@@ -109,4 +109,13 @@ describe "stig::audits" do
     )
   end
   
+  it "creates /root/check_groups_in_etc_passwd.sh file" do
+    expect(chef_run).to create_cookbook_file("check_groups_in_etc_passwd.sh").with(
+      path: "/root/check_groups_in_etc_passwd.sh",
+      owner: "root",
+      group: "root",
+      mode: 0700
+    )
+  end
+  
 end
