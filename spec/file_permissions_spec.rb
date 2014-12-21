@@ -8,6 +8,10 @@ describe "stig::file_permissions" do
   end
   
   before do
+    stub_command("test -n \"$(/bin/grep '^+' /etc/passwd)\"").and_return(true)
+  end
+  
+  before do
     stub_command("test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002)\"").and_return(true)
   end
   
@@ -123,6 +127,13 @@ describe "stig::file_permissions" do
     expect(chef_run).to run_bash("no_empty_passwd_fields").with(
     user: "root",
     code: "for user in $(/bin/cat /etc/shadow | /bin/awk -F: '($2 == \"\")' | cut -d':' -f1 $1);do /usr/bin/passwd -l $user;done"
+    )
+  end
+  
+  it "no legacy + entries exist in /etc/passwd" do
+    expect(chef_run).to run_bash("no legacy + entries exist in /etc/passwd").with(
+    user: "root",
+    code: "sed -i '/^+/ d' /etc/passwd"
     )
   end
   

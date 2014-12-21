@@ -333,3 +333,20 @@ bash "no_empty_passwd_fields" do
   only_if "test -n \"$(/bin/cat /etc/shadow | /bin/awk -F: '($2 == \"\" )')\"", :user => "root"
 end
 
+# 9.2.2 Verify No Legacy "+" Entries Exist in /etc/passwd File
+# The character + in various files used to be markers for systems
+#  to insert data from NIS maps at a certain point in a system
+# configuration file. These entries are no longer required on 
+# RHEL6/CentOS 6 systems, but may exist in files that have been
+# imported from other platforms.
+#
+# These entries may provide an avenue for attackers to gain
+# privileged access on the system.
+bash "no legacy + entries exist in /etc/passwd" do
+  user "root"
+  code "sed -i '/^+/ d' /etc/passwd"
+  guard_interpreter :bash
+  only_if "test -n \"$(/bin/grep '^+' /etc/passwd)\"", :user => "root"
+end
+
+
