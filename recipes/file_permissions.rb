@@ -278,7 +278,7 @@ file "/etc/group" do
   mode 0644
 end
 
-# 9.1.10 Find World Writable Files
+# 9.1.9 Find World Writable Files
 # Unix-based systems support variable settings to control access to files.
 # World writable files are the least secure. See the chmod(2) man page for
 # more information.
@@ -291,7 +291,20 @@ bash "remove_world_writable_flag_from_files" do
   user "root"
   code "for fn in $(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002);do chmod o-w $fn;done"
   only_if "test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002)\"", :user => "root" 
-  end
+end
+  
+# 9.1.10 Find Un-owned Files and Directories
+# Sometimes when administrators delete users from the password file they
+# neglect to remove all files owned by those users from the system.
+#
+# A new user who is assigned the deleted user's user ID or group ID may
+# then end up "owning" these files, and thus have more access on the system
+# than was intended.
+bash "reclaim_ownership_of_orphaned_files_and_dirs" do
+  user "root"
+  code "for fn in $(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls | awk '{ printf $11\"\\n\" }'); do chown root:root $fn;done"
+  only_if "test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls)\"", :user => "root"
+end
   
 # 9.2.1 Ensure Password Fields are Not Empty (Scored)
 # An account with an empty password field means that anybody may log in as

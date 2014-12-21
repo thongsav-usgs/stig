@@ -10,6 +10,10 @@ describe "stig::file_permissions" do
   before do
     stub_command("test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002)\"").and_return(true)
   end
+  
+  before do
+    stub_command("test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls)\"").and_return(true)
+  end
 
   it "creates /etc/anacrontab template" do
     expect(chef_run).to create_file("/etc/anacrontab").with(
@@ -113,13 +117,22 @@ describe "stig::file_permissions" do
   
   it "checks for empty password fields" do
     expect(chef_run).to run_bash("no_empty_passwd_fields").with(
-    user: "root"
+    user: "root",
+    code: "for user in $(/bin/cat /etc/shadow | /bin/awk -F: '($2 == \"\")' | cut -d':' -f1 $1);do /usr/bin/passwd -l $user;done"
     )
   end
   
   it "checks for world writable files" do
     expect(chef_run).to run_bash("remove_world_writable_flag_from_files").with(
-    user: "root"
+    user: "root",
+    code: "for fn in $(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002);do chmod o-w $fn;done"
+    )
+  end
+  
+  it "checks for unowned files and directories" do
+    expect(chef_run).to run_bash("reclaim_ownership_of_orphaned_files_and_dirs").with(
+    user: "root",
+    code: "for fn in $(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls | awk '{ printf $11\"\\n\" }'); do chown root:root $fn;done"
     )
   end
   
