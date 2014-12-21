@@ -349,4 +349,34 @@ bash "no legacy + entries exist in /etc/passwd" do
   only_if "test -n \"$(/bin/grep '^+' /etc/passwd)\"", :user => "root"
 end
 
+# 9.2.3 Verify No Legacy "+" Entries Exist in /etc/shadow File
+# The character + in various files used to be markers for systems
+# to insert data from NIS maps at a certain point in a system
+# configuration file. These entries are no longer required on
+# RHEL6/CentOS systems, but may exist in files that have been imported
+# from other platforms.
+#
+# These entries may provide an avenue for attackers to gain privileged
+# access on the system.
+bash "no legacy + entries exist in /etc/shadow" do
+  user "root"
+  code "sed -i '/^+/ d' /etc/shadow"
+  guard_interpreter :bash
+  only_if "test -n \"$(/bin/grep '^+' /etc/shadow)\"", :user => "root"
+end
 
+# 9.2.4 Verify No Legacy "+" Entries Exist in /etc/group File
+# The character + in various files used to be markers for systems
+# to insert data from NIS maps at a certain point in a system
+# configuration file. These entries are no longer required on
+# RHEL6/CentOS systems, but may exist in files that have been
+# imported from other platforms.
+#
+# These entries may provide an avenue for attackers to gain
+# privileged access on the system.
+bash "no legacy + entries exist in /etc/group" do
+  user "root"
+  code "sed -i '/^+/ d' /etc/group"
+  guard_interpreter :bash
+  only_if "test -n \"$(/bin/grep '^+' /etc/group)\"", :user => "root"
+end

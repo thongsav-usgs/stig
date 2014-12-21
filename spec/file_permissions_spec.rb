@@ -12,6 +12,14 @@ describe "stig::file_permissions" do
   end
   
   before do
+    stub_command("test -n \"$(/bin/grep '^+' /etc/shadow)\"").and_return(true)
+  end
+  
+  before do
+    stub_command("test -n \"$(/bin/grep '^+' /etc/group)\"").and_return(true)
+  end
+  
+  before do
     stub_command("test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002)\"").and_return(true)
   end
   
@@ -134,6 +142,20 @@ describe "stig::file_permissions" do
     expect(chef_run).to run_bash("no legacy + entries exist in /etc/passwd").with(
     user: "root",
     code: "sed -i '/^+/ d' /etc/passwd"
+    )
+  end
+  
+  it "no legacy + entries exist in /etc/shadow" do
+    expect(chef_run).to run_bash("no legacy + entries exist in /etc/shadow").with(
+    user: "root",
+    code: "sed -i '/^+/ d' /etc/shadow"
+    )
+  end
+  
+  it "no legacy + entries exist in /etc/group" do
+    expect(chef_run).to run_bash("no legacy + entries exist in /etc/group").with(
+    user: "root",
+    code: "sed -i '/^+/ d' /etc/group"
     )
   end
   
