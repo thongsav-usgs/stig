@@ -40,9 +40,6 @@ include_recipe "stig::rsyslog"
 # 5.3 
 include_recipe "stig::logrotate"
 
-# 6.1.3 - 6.1.10
-include_recipe "stig::file_permissions"
-
 # 6.2.2 - 6.2.13
 include_recipe "stig::sshd_config"
 
@@ -55,5 +52,5 @@ include_recipe "stig::login_defs"
 # 8.1
 include_recipe "stig::login_banner"
 
-# 9.1.1 - 9.1.8
+# 6.1.3 - 6.1.10, 9.1.1 - 9.1.8
 include_recipe "stig::file_permissions"

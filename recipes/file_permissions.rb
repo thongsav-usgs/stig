@@ -277,3 +277,32 @@ file "/etc/group" do
   group "root"
   mode 0644
 end
+
+# 9.1.10 Find World Writable Files
+# Unix-based systems support variable settings to control access to files.
+# World writable files are the least secure. See the chmod(2) man page for
+# more information.
+#
+# Data in world-writable files can be modified and compromised by any user
+# on the system. World writable files may also indicate an incorrectly
+# written script or program that could potentially be the cause of a larger
+# compromise to the system's integrity.
+bash "remove_world_writable_flag_from_files" do
+  user "root"
+  code "for fn in $(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002);do chmod o-w $fn;done"
+  only_if "test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002)\"", :user => "root" 
+  end
+  
+# 9.2.1 Ensure Password Fields are Not Empty (Scored)
+# An account with an empty password field means that anybody may log in as
+# that user without providing a password.  
+#
+# All accounts must have passwords or be locked to prevent the account from
+# being used by an unauthorized user.
+bash "no_empty_passwd_fields" do
+  user "root"
+  code "for user in $(/bin/cat /etc/shadow | /bin/awk -F: '($2 == \"\")' | cut -d':' -f1 $1);do /usr/bin/passwd -l $user;done"
+  guard_interpreter :bash
+  only_if "test -n \"$(/bin/cat /etc/shadow | /bin/awk -F: '($2 == \"\" )')\"", :user => "root"
+end
+

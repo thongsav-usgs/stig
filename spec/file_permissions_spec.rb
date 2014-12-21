@@ -2,7 +2,15 @@ require "spec_helper"
 
 describe "stig::file_permissions" do
   let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
+
+  before do
+    stub_command("test -n \"$(/bin/cat /etc/shadow | /bin/awk -F: '($2 == \"\" )')\"").and_return(true)
+  end
   
+  before do
+    stub_command("test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002)\"").and_return(true)
+  end
+
   it "creates /etc/anacrontab template" do
     expect(chef_run).to create_file("/etc/anacrontab").with(
       owner: "root",
@@ -102,4 +110,17 @@ describe "stig::file_permissions" do
       mode: 0000
     )
   end
+  
+  it "checks for empty password fields" do
+    expect(chef_run).to run_bash("no_empty_passwd_fields").with(
+    user: "root"
+    )
+  end
+  
+  it "checks for world writable files" do
+    expect(chef_run).to run_bash("remove_world_writable_flag_from_files").with(
+    user: "root"
+    )
+  end
+  
 end
