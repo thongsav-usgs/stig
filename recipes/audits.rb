@@ -234,3 +234,18 @@ cookbook_file "check_duplicate_usernames.sh" do
   path "/root/.audit/check_duplicate_usernames.sh"
   mode 0700
 end
+
+# 9.2.19 Check for Duplicate Group Names
+# Although the groupadd program will not let you create a duplicate
+# group name, it is possible for an administrator to manually edit
+# the /etc/group file and change the group name.
+#
+# If a group is assigned a duplicate group name, it will create and
+# have access to files with the first GID for that group in /etc/group.
+# Effectively, the GID is shared, which is a security problem.
+cookbook_file "check_duplicate_groupnames.sh" do
+  user "root"
+  group "root"
+  path "/root/.audit/check_duplicate_groupnames.sh"
+  mode 0700
+end

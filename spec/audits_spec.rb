@@ -162,4 +162,13 @@ describe "stig::audits" do
     )
   end
   
+  it "creates /root/.audit/check_duplicate_groupnames.sh file" do
+    expect(chef_run).to create_cookbook_file("check_duplicate_groupnames.sh").with(
+      path: "/root/.audit/check_duplicate_groupnames.sh",
+      owner: "root",
+      group: "root",
+      mode: 0700
+    )
+  end
+  
 end
