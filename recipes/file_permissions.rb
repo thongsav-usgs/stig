@@ -306,7 +306,21 @@ bash "reclaim_ownership_of_orphaned_files_and_dirs" do
   only_if "test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls)\"", :user => "root"
 end
   
-# 9.2.1 Ensure Password Fields are Not Empty (Scored)
+  
+# 9.1.11 Find Un-grouped Files and Directories
+# Sometimes when administrators delete users from the password file they
+# neglect to remove all files owned by those users from the system.
+#
+# A new user who is assigned the deleted user's user ID or group ID may
+# then end up "owning" these files, and thus have more access on the system 
+# than was intended.
+bash "find group orphaned files and directories" do
+  user "root"
+  code "for fn in $(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls | awk '{ printf $11\"\\n\" }'); do chown root:root $fn;done"
+  only_if "test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls)\"", :user => "root"
+end
+  
+# 9.2.1 Ensure Password Fields are Not Empty
 # An account with an empty password field means that anybody may log in as
 # that user without providing a password.  
 #

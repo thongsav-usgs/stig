@@ -14,6 +14,10 @@ describe "stig::file_permissions" do
   before do
     stub_command("test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls)\"").and_return(true)
   end
+  
+  before do
+    stub_command("test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls)\"").and_return(true)
+  end
 
   it "creates /etc/anacrontab template" do
     expect(chef_run).to create_file("/etc/anacrontab").with(
@@ -133,6 +137,13 @@ describe "stig::file_permissions" do
     expect(chef_run).to run_bash("reclaim_ownership_of_orphaned_files_and_dirs").with(
     user: "root",
     code: "for fn in $(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls | awk '{ printf $11\"\\n\" }'); do chown root:root $fn;done"
+    )
+  end
+  
+  it "checks for group unowned files and directories" do
+    expect(chef_run).to run_bash("find group orphaned files and directories").with(
+    user: "root",
+    code: "for fn in $(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls | awk '{ printf $11\"\\n\" }'); do chown root:root $fn;done"
     )
   end
   
