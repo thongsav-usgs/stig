@@ -191,4 +191,13 @@ describe "stig::file_permissions" do
     )
   end
   
+  it "creates /root/path_integrity_check.sh file" do
+    expect(chef_run).to create_cookbook_file("path_integrity_check.sh").with(
+      path: "/root/path_integrity_check.sh",
+      owner: "root",
+      group: "root",
+      mode: 0700
+    )
+  end
+  
 end

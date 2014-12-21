@@ -395,3 +395,19 @@ bash "no UID 0 except root account exists" do
   only_if "/bin/cat /etc/passwd | /bin/awk -F: '($3 == 0) { print $1 }' | grep -v \"root\"", :user => "root"
 end
 
+# 9.2.6 Ensure root PATH Integrity
+# The root user can execute any command on the
+# system and could be fooled into executing programs
+# unemotionally if the PATH is not set correctly.
+#
+# Including the current working directory (.) or
+# other writable directory in root's executable
+# path makes it likely that an attacker can gain
+# superuser access by forcing an administrator
+# operating as root to execute a Trojan horse program.
+cookbook_file "path_integrity_check.sh" do
+  user "root"
+  group "root"
+  path "/root/path_integrity_check.sh"
+  mode 0700
+end
