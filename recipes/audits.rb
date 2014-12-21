@@ -188,3 +188,17 @@ cookbook_file "validate_users_homedirs.sh" do
   path "/root/.audit/validate_users_homedirs.sh"
   mode 0700
 end
+
+# 9.2.15 Check for Duplicate UIDs
+# Although the useradd program will not let you create a
+# duplicate User ID (UID), it is possible for an administrator
+# to manually edit the /etc/passwd file and change the UID field.
+#
+# Users must be assigned unique UIDs for accountability and to
+# ensure appropriate access protections.
+cookbook_file "check_duplicate_uid.sh" do
+  user "root"
+  group "root"
+  path "/root/.audit/check_duplicate_uid.sh"
+  mode 0700
+end
