@@ -1,3 +1,7 @@
+# Cookbook Name:: stig
+# Recipe:: boot_settings
+# Author: Ivan Suftin <isuftin@usgs.gov>
+
 # 1.5.1 Set the owner and group of /etc/grub.conf to the root user. (Scored)
 # 1.5.2 Set permission on the /etc/grub.conf file to read and write for root only. (Scored)
 # 1.5.3 Set Boot Loader Password (Scored)
@@ -20,7 +24,7 @@
 
 # Also applies CIS 4.2.3
 template "/boot/grub/grub.conf" do
-  source "grub.conf.erb"
+  source "etc_grub.conf.erb"
   owner "root"
   group "root"
   mode 0600
@@ -36,7 +40,7 @@ end
 
 # 4.2.1-3
 template "/etc/audit/auditd.conf" do
-  source "auditd.conf.erb"
+  source "etc_audit_auditd.conf.erb"
   owner "root"
   group "root"
   mode 0640
