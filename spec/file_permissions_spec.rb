@@ -30,7 +30,11 @@ describe "stig::file_permissions" do
   before do
     stub_command("test -n \"$(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls)\"").and_return(true)
   end
-
+  
+  before do
+    stub_command("/bin/cat /etc/passwd | /bin/awk -F: '($3 == 0) { print $1 }' | grep -v \"root\"").and_return(true)
+  end
+  
   it "creates /etc/anacrontab template" do
     expect(chef_run).to create_file("/etc/anacrontab").with(
       owner: "root",
@@ -177,6 +181,13 @@ describe "stig::file_permissions" do
     expect(chef_run).to run_bash("find group orphaned files and directories").with(
     user: "root",
     code: "for fn in $(df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls | awk '{ printf $11\"\\n\" }'); do chown root:root $fn;done"
+    )
+  end
+  
+  it "no UID 0 except root account exists" do
+    expect(chef_run).to run_bash("no UID 0 except root account exists").with(
+    user: "root",
+    code: "for acct in $(/bin/cat /etc/passwd | /bin/awk -F: '($3 == 0) { print $1 }' | grep -v \"root\"); do sed -i \"/^$acct:/ d\" /etc/passwd;done"
     )
   end
   

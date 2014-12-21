@@ -380,3 +380,18 @@ bash "no legacy + entries exist in /etc/group" do
   guard_interpreter :bash
   only_if "test -n \"$(/bin/grep '^+' /etc/group)\"", :user => "root"
 end
+
+# 9.2.5 Verify No UID 0 Accounts Exist Other Than root
+# Any account with UID 0 has superuser privileges on the system.
+#
+# This access must be limited to only the default root account
+# and only from the system console. Administrative access must
+# be through an unprivileged account using an approved mechanism
+# as noted in Item 7.5 Restrict root Login to System Console.
+bash "no UID 0 except root account exists" do
+  user "root"
+  code "for acct in $(/bin/cat /etc/passwd | /bin/awk -F: '($3 == 0) { print $1 }' | grep -v \"root\"); do sed -i \"/^$acct:/ d\" /etc/passwd;done"
+  guard_interpreter :bash
+  only_if "/bin/cat /etc/passwd | /bin/awk -F: '($3 == 0) { print $1 }' | grep -v \"root\"", :user => "root"
+end
+
