@@ -216,3 +216,21 @@ cookbook_file "check_duplicate_gid.sh" do
   path "/root/.audit/check_duplicate_gid.sh"
   mode 0700
 end
+
+# 9.2.18 Check for Duplicate User Names
+# Although the useradd program will not let you create a duplicate
+# user name, it is possible for an administrator to manually edit
+# the /etc/passwd file and change the user name.
+#
+# If a user is assigned a duplicate user name, it will create and
+# have access to files with the first UID for that username in
+# /etc/passwd. For example, if "test4" has a UID of 1000 and a 
+# subsequent "test4" entry has a UID of 2000, logging in as "test4"
+# will use UID 1000. Effectively, the UID is shared, which is
+# a security problem.
+cookbook_file "check_duplicate_usernames.sh" do
+  user "root"
+  group "root"
+  path "/root/.audit/check_duplicate_usernames.sh"
+  mode 0700
+end
