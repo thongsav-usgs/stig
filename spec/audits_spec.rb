@@ -99,6 +99,15 @@ describe "stig::audits" do
     )
   end
   
+  it "creates /root/.audit/find_suid_system_executables.sh file" do
+    expect(chef_run).to create_cookbook_file("find_suid_system_executables.sh").with(
+      path: "/root/.audit/find_suid_system_executables.sh",
+      owner: "root",
+      group: "root",
+      mode: 0700
+    )
+  end
+  
   it "creates /root/.audit/path_integrity_check.sh file" do
     expect(chef_run).to create_cookbook_file("path_integrity_check.sh").with(
       path: "/root/.audit/path_integrity_check.sh",

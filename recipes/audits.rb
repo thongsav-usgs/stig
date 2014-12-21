@@ -126,6 +126,23 @@ directory "/root/.audit" do
   mode 0600
 end
 
+# 9.1.12 Find SUID System Executables
+# The owner of a file can set the file’s permissions to run
+# with the owner’s or group’s permissions, even if the user
+# running the program is not the owner or a member of the group.
+# The most common reason for a SUID program is to enable users
+# to perform functions (such as changing their password) that
+# require root privileges.
+#
+# There are valid reasons for SUID programs, but it is important
+# to identify and review such programs to ensure they are legitimate.
+cookbook_file "find_suid_system_executables.sh" do
+  user "root"
+  group "root"
+  path "/root/.audit/find_suid_system_executables.sh"
+  mode 0700
+end
+
 # 9.2.6 Ensure root PATH Integrity
 # The root user can execute any command on the
 # system and could be fooled into executing programs
