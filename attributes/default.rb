@@ -47,6 +47,11 @@ default["stig"]["network"]["packet_redirects"] = false
 # true = Enable redirect acceptance
 default["stig"]["network"]["icmp_redirect_accept"] = false
 
+# 4.2.3 Disable Secure ICMP Redirect Acceptance
+# false = Disable redirect acceptance
+# true = Enable redirect acceptance
+default["stig"]["network"]["icmp_all_secure_redirect_accept"] = false
+
 # 4.2.4 Log Suspicious Packets
 # true / false
 default["stig"]["network"]["log_suspicious_packets"] = true
@@ -135,6 +140,8 @@ default["stig"]["sshd_config"]["permit_empty_passwords"] = false
 
 # 6.2.10 Do Not Allow Users to Set Environment Options
 default["stig"]["sshd_config"]["allow_users_set_env_opts"] = false
+
+default["stig"]["sshd_config"]["banner_path"] = "/etc/issue"
 
 # 6.2.13 Limit Access via SSH
 default["stig"]["sshd_config"]["deny_users"] = [

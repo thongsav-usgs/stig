@@ -28,22 +28,28 @@
 # All programs that use /var/tmp and /tmp to read/write temporary files will always be written to the /tmp file system, preventing a user from 
 # running the /var file system out of space or trying to perform operations that have been blocked in the /tmp filesystem.
 
-vartmp = "/var/tmp"
+var_tmp = "/var/tmp"
+dev_shm = "/dev/shm"
 tmp = "/tmp"
 
-# 1.1.2, 1.1.3, 1.1.4 
-mount tmp do
-  fstype   "tmpfs"
-  device   "/dev/shm"
-  options  "remount,noexec,nodev,nosuid"
-  mounted  true
-  enabled  true
-  action   [:remount, :enable]
-end
-
 # 1.1.6 
-mount vartmp do
+mount var_tmp do
   fstype   "tmpfs"
   device   tmp
   options  "bind"
 end
+
+# 1.1.2, 1.1.3, 1.1.4 
+mount dev_shm do
+  fstype "tmpfs"
+  device "none"
+  options "remount,noexec,nodev,nosuid"
+  mounted true
+  enabled true
+  action [:mount, :enable]
+end
+
+
+
+
+

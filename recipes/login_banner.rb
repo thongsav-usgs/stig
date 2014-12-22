@@ -34,22 +34,22 @@
 # can easily get this information by running the “uname –a” command once
 # they have logged in.
 
-cookbook_file "/etc/motd" do
-  path "motd"
+cookbook_file "motd" do
+  path "/etc/motd"
   owner "root"
   group "root"
   mode 0644
 end
 
-cookbook_file "/etc/issue" do
-  path "issue"
+cookbook_file "issue" do
+  path "/etc/issue"
   owner "root"
   group "root"
   mode 0644
 end
 
-cookbook_file "/etc/issue.net" do
-  path "issue"
+cookbook_file "issue.net" do
+  path "/etc/issue.net"
   owner "root"
   group "root"
   mode 0644
