@@ -5,7 +5,7 @@ describe "stig::login_banner" do
   
   it "creates /etc/motd file" do
     expect(chef_run).to create_cookbook_file("/etc/motd").with(
-      path: "motd",
+      path: "/etc/motd",
       owner: "root",
       group: "root",
       mode: 0644
@@ -14,7 +14,7 @@ describe "stig::login_banner" do
   
   it "creates /etc/issue file" do
     expect(chef_run).to create_cookbook_file("/etc/issue").with(
-      path: "issue",
+      path: "/etc/issue",
       owner: "root",
       group: "root",
       mode: 0644
@@ -23,7 +23,7 @@ describe "stig::login_banner" do
   
   it "creates /etc/issue.net file" do
     expect(chef_run).to create_cookbook_file("/etc/issue.net").with(
-      path: "issue",
+      path: "/etc/issue.net",
       owner: "root",
       group: "root",
       mode: 0644
