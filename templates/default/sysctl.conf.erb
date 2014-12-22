@@ -19,6 +19,8 @@ net.ipv4.conf.all.rp_filter = <%= @rfc_source_route_validation %>
 net.ipv4.conf.default.rp_filter = <%= @rfc_source_route_validation %>
 net.ipv6.conf.all.accept_redirects = <%= @ipv6_redirect_accept %>
 net.ipv6.conf.default.accept_redirects = <%= @ipv6_redirect_accept %>
+net.ipv4.conf.all.secure_redirects = <%= @icmp_all_secure_redirect_accept %>
+net.ipv4.conf.default.secure_redirects = <%= @icmp_all_secure_redirect_accept %>
 
 # Controls source route verification
 net.ipv4.conf.default.rp_filter = 1

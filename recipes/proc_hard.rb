@@ -46,6 +46,15 @@ end
 # Attackers could use bogus ICMP redirect messages to maliciously alter the system routing
 # tables and get them to send packets to incorrect networks and allow your system packets to be captured.
 
+# 4.2.3 Disable Secure ICMP Redirect Acceptance
+# Secure ICMP redirects are the same as ICMP redirects, except they come from gateways
+# listed on the default gateway list. It is assumed that these gateways are known to your
+# system, and that they are likely to be secure.
+#
+# It is still possible for even known gateways to be compromised. Setting
+# net.ipv4.conf.all.secure_redirects to 0 protects the system from routing table updates
+# by possibly compromised known gateways.
+
 # 4.2.4 Log Suspicious Packets
 # When enabled, this feature logs packets with un-routable source addresses to the kernel log.
 #
@@ -109,6 +118,12 @@ else
   ipv6_redirect_accept = 0
 end
 
+if node[:stig][:network][:icmp_all_secure_redirect_accept]
+  icmp_all_secure_redirect_accept = 1
+else
+  icmp_all_secure_redirect_accept = 0
+end
+
 template "/etc/sysctl.conf" do
   source "sysctl.conf.erb"
   owner "root"
@@ -120,7 +135,8 @@ template "/etc/sysctl.conf" do
     :icmp_redirect_accept => icmp_redirect_accept,
     :log_suspicious_packets => log_suspicious_packets,
     :rfc_source_route_validation => rfc_source_route_validation,
-    :ipv6_redirect_accept => ipv6_redirect_accept
+    :ipv6_redirect_accept => ipv6_redirect_accept,
+    :icmp_all_secure_redirect_accept => icmp_all_secure_redirect_accept
     )
   notifies :run, "execute[sysctl_ip_forward]", :immediately
   notifies :run, "execute[sysctl_send_redirects]", :immediately
@@ -145,6 +161,12 @@ end
 execute "sysctl_icmp_redirect_accept" do
   user "root"
   command "/sbin/sysctl -w net.ipv4.conf.all.accept_redirects=#{icmp_redirect_accept}; /sbin/sysctl -w net.ipv4.conf.default.accept_redirects=#{icmp_redirect_accept}"
+  action :nothing
+end
+
+execute "sysctl_icmp_redirect_accept" do
+  user "root"
+  command "/sbin/sysctl -w net.ipv4.conf.all.secure_redirects=#{icmp_all_secure_redirect_accept}; /sbin/sysctl -w net.ipv4.conf.default.secure_redirects=#{icmp_all_secure_redirect_accept}"
   action :nothing
 end
 

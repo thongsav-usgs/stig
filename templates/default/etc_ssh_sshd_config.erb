@@ -133,7 +133,7 @@ PermitUserEnvironment <%= @allow_users_set_env_opts %>
 #ChrootDirectory none
 
 # no default banner path
-#Banner none
+Banner <%= @banner_path %>
 
 # override default of no subsystems
 Subsystem	sftp	/usr/libexec/openssh/sftp-server
