@@ -5,7 +5,7 @@ describe "stig::fstab_tmp" do
   
   # 1.1.2, 1.1.3, 1.1.4
   it "sets the nodev and nosuid option for /tmp partition" do
-    expect(chef_run).to remount_mount("/tmp").with(
+    expect(chef_run).to remount_mount("/dev/shm").with(
     options: ["remount","noexec","nodev","nosuid"]
     )
   end
