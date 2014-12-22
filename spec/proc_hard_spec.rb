@@ -32,6 +32,10 @@ describe "stig::proc_hard" do
       expect(chef_run).to_not run_execute('sysctl_icmp_redirect_accept')
     end
     
+    it 'excludes sysctl_icmp_secure_redirect_accept execution due to :nothing guard' do
+      expect(chef_run).to_not run_execute('sysctl_icmp_secure_redirect_accept')
+    end
+    
     it 'excludes sysctl_log_suspicious_packets execution due to :nothing guard' do
       expect(chef_run).to_not run_execute('sysctl_log_suspicious_packets')
     end
