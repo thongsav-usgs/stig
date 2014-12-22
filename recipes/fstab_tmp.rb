@@ -46,7 +46,7 @@ mount dev_shm do
   options "remount,noexec,nodev,nosuid"
   mounted true
   enabled true
-  action [:mount, :enable]
+  action [:remount, :enable]
 end
 
 

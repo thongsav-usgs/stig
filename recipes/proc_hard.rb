@@ -141,6 +141,7 @@ template "/etc/sysctl.conf" do
   notifies :run, "execute[sysctl_ip_forward]", :immediately
   notifies :run, "execute[sysctl_send_redirects]", :immediately
   notifies :run, "execute[sysctl_icmp_redirect_accept]", :immediately
+  notifies :run, "execute[sysctl_icmp_secure_redirect_accept]", :immediately
   notifies :run, "execute[sysctl_log_suspicious_packets]", :immediately
   notifies :run, "execute[sysctl_rfc_source_route_validation]", :immediately
   notifies :run, "execute[sysctl_ipv4_flush]", :immediately
@@ -164,7 +165,7 @@ execute "sysctl_icmp_redirect_accept" do
   action :nothing
 end
 
-execute "sysctl_icmp_redirect_accept" do
+execute "sysctl_icmp_secure_redirect_accept" do
   user "root"
   command "/sbin/sysctl -w net.ipv4.conf.all.secure_redirects=#{icmp_all_secure_redirect_accept}; /sbin/sysctl -w net.ipv4.conf.default.secure_redirects=#{icmp_all_secure_redirect_accept}"
   action :nothing
