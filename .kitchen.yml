@@ -1,8 +1,6 @@
 ---
 driver:
   name: vagrant
-  network:
-  - ["private_network", {ip: "10.0.0.10"}]
 
 provisioner:
   name: chef_zero
@@ -21,7 +19,10 @@ platforms:
 # NOTE: 4.2.17 needs to be uncommented. and 4.2.12 needs to be confirmed. See cis template for more info.
 # Note: There is probably a better way to pull in auditd and apply the cis attribute, this works for now.
 suites:
-  - name: default
+  - name: defaulti
+    driver:
+      network:
+      - ["private_network", {ip: "10.0.0.10"}]
     run_list:
       - recipe[stig::default]
       - recipe[auditd::rules]
