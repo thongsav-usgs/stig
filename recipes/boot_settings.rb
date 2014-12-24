@@ -32,7 +32,7 @@ template "/boot/grub/grub.conf" do
 end
 
 template "/etc/sysconfig/init" do
-  source "init.erb"
+  source "etc_sysconfig_init.erb"
   owner "root"
   group "root"
   mode 0644

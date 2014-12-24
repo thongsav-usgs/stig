@@ -1,7 +1,4 @@
-require 'serverspec'
-
-# Required by serverspec
-set :backend, :exec
+require 'spec_helper'
 
 describe package('aide') do
   it { should be_installed }  

@@ -1,7 +1,4 @@
-require 'serverspec'
-
-# Required by serverspec
-set :backend, :exec
+require 'spec_helper'
 
 describe file('/root/.audit') do
   it { should be_directory }
