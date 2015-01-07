@@ -1,4 +1,4 @@
-# Cookbook Name:: stig
+﻿# Cookbook Name:: stig
 # Recipe:: login_banner
 # Author: Ivan Suftin <isuftin@usgs.gov>
 
@@ -33,6 +33,8 @@
 # attempting to target specific exploits of a system. Authorized users
 # can easily get this information by running the “uname –a” command once
 # they have logged in.
+
+# This is a new comment. -- Chad
 
 cookbook_file "motd" do
   path "/etc/motd"
