@@ -1,21 +1,25 @@
-#
 # Cookbook Name:: stig
 # Recipe:: proc_hard
 # Author: David Blodgett <dblodgett@usgs.gov>
-
-# 1.6.1 Restrict Core Dumps (Scored)
-# A core dump is the memory of an executable program. It is generally used to 
-# determine why a program aborted. It can also be used to glean confidential information 
-# from a core file. The system provides the ability to set a soft limit for core dumps, 
-# but this can be overridden by the user.
-
-# 1.6.2 Configure ExecShield (Scored)
-# Execshield is made up of a number of kernel features to provide protection against 
-# buffer overflow attacks. These features include prevention of execution in memory 
-# data space, and special handling of text buffers.
-
-# 1.6.3 Enable Randomized Virtual Memory Region Placement (Scored)
-# Set the system flag to force randomized virtual memory region placement.
+#
+# Description: Sets a few policies 
+#
+# TODO- This recipe should probably be refactored into separate recipes for the 1.x.x and 4.x.x items
+#
+# CIS Benchmark Items
+# RHEL6:  1.7.1, 1.7.2, 1.7.3, 4.1.1, 4.1.2, 4.2.2, 4.2.3, 4.2.4, 4.2.7, 4.4.2.2
+# CENTOS6: 1.6.1, 1.6.2, 1.6.3, 5.1.1, 5.1.2, 5.2.2, 5.2.3, 5.2.4, 5.2.7, 5.4.1.2
+#
+# - Restrict Core Dumps
+# - Configure ExecShield
+# - Enable Randomized Virtual Memory Region Placement
+# - Disable IP Forwarding
+# - Disable Send Packet Redirects
+# - Disable ICMP Redirect Acceptance
+# - Disable Secure ICMP Redirect Acceptance
+# - Log Suspicious Packets
+# - Enable RFC-recommended Source Route Validation
+# - Disable IPv6 Redirect Acceptance
 
 template "/etc/security/limits.conf" do
   source "limits.conf.erb"
@@ -23,64 +27,6 @@ template "/etc/security/limits.conf" do
   group "root"
   mode 0644
 end
-
-# 4.1.1 Disable IP Forwarding
-# The net.ipv4.ip_forward flag is used to tell the server whether it can
-# forward packets or not. If the server is not to be used as a router, set the flag to 0.
-
-# 4.1.2 Disable Send Packet Redirects
-# ICMP Redirects are used to send routing information to other hosts. As a host itself
-# does not act as a router (in a host only configuration), there is no need to send redirects.
-#
-# An attacker could use a compromised host to send invalid ICMP redirects to other router
-# devices in an attempt to corrupt routing and have users access a system set up by the
-# attacker as opposed to a valid system.
-
-# 4.2.2 Disable ICMP Redirect Acceptance
-# ICMP redirect messages are packets that convey routing information and tell your host
-# (acting as a router) to send packets via an alternate path. It is a way of allowing an
-# outside routing device to update your system routing tables. By
-# setting net.ipv4.conf.all.accept_redirects to 0, the system will not accept any ICMP
-# redirect messages, and therefore, won’t allow outsiders to update the system’s routing tables.
-#
-# Attackers could use bogus ICMP redirect messages to maliciously alter the system routing
-# tables and get them to send packets to incorrect networks and allow your system packets to be captured.
-
-# 4.2.3 Disable Secure ICMP Redirect Acceptance
-# Secure ICMP redirects are the same as ICMP redirects, except they come from gateways
-# listed on the default gateway list. It is assumed that these gateways are known to your
-# system, and that they are likely to be secure.
-#
-# It is still possible for even known gateways to be compromised. Setting
-# net.ipv4.conf.all.secure_redirects to 0 protects the system from routing table updates
-# by possibly compromised known gateways.
-
-# 4.2.4 Log Suspicious Packets
-# When enabled, this feature logs packets with un-routable source addresses to the kernel log.
-#
-# Enabling this feature and logging these packets allows an administrator to investigate the
-# possibility that an attacker is sending spoofed packets to their server.
-
-# 4.2.7 Enable RFC-recommended Source Route Validation
-# Setting net.ipv4.conf.all.rp_filter and net.ipv4.conf.default.rp_filter to 1 forces the
-# Linux kernel to utilize reverse path filtering on a received packet to determine if the
-# packet was valid. Essentially, with reverse path filtering, if the return packet does
-# not go out the same interface that the corresponding source packet came from, the packet
-# is dropped (and logged if log_martians is set).
-#
-# Setting these flags is a good way to deter attackers from sending your server bogus
-# packets that cannot be responded to. One instance where this feature breaks down is
-# if asymmetrical routing is employed. This is would occur when using dynamic routing
-# protocols (bgp, ospf, etc) on your system. If you are using asymmetrical routing on
-# your server, you will not be able to enable this feature without breaking the routing.
-
-# 4.4.2.2 Disable IPv6 Redirect Acceptance
-# This setting prevents the system from accepting ICMP redirects. ICMP redirects tell
-# the system about alternate routes for sending traffic.
-#
-# It is recommended that systems not accept ICMP redirects as they could be tricked
-# into routing traffic to compromised machines. Setting hard routes within the system
-# (usually a single default route to a trusted router) protects the system from bad routes.
 
 if node[:stig][:network][:ip_forwarding]
   ip_forwarding = 1

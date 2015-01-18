@@ -1,15 +1,14 @@
 # Cookbook Name:: stig
 # Recipe:: system-auth
 # Author: Ivan Suftin <isuftin@usgs.gov>
-
-# 6.3.6 Limit Password Reuse
-# The /etc/security/opasswd file stores the users’ old
-# passwords and can be checked to ensure that users are
-# not recycling recent passwords.
 #
-# Forcing users not to reuse their past 5 passwords
-# make it less likely that an attacker will be able to guess the password.
-# Note that these change only apply to accounts configured on the local system.
+# Description: Configure Sysauth
+#
+# CIS Benchmark Items
+# RHEL6:  6.3.6
+# CENTOS6: 6.3.4
+#
+# - Limit Password Reuse
 
 template "/etc/pam.d/system-auth" do
   source "etc_pam.d_system-auth.erb"
