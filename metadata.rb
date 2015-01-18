@@ -6,4 +6,4 @@ description      'Installs/Configures CIS STIG benchmarks'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.1.1'
 supports         'centos'
-depends          "auditd", "~> 0.1.3"
+depends          "auditd", "~> 0.1.4"
