@@ -20,33 +20,7 @@ describe "stig::avahi_daemon" do
       command: "/sbin/chkconfig avahi-daemon off"
     )
   end
-  
-  it "creates /etc/sysconfig/network template" do
-    expect(chef_run).to create_template("/etc/sysconfig/network").with(
-        source: "etc_sysconfig_network.erb",
-        owner: "root",
-        group: "root",
-        mode: 0644
-      )
-  end
-  
-  it "creates /etc/sysconfig/network template" do
-    expect(chef_run).to create_template("/etc/sysconfig/network").with(
-        source: "etc_sysconfig_network.erb",
-        owner: "root",
-        group: "root",
-        mode: 0644
-      )
-  end
-  
-  it "creates /etc/modprobe.d/ipv6.conf template" do
-    expect(chef_run).to create_template("/etc/modprobe.d/ipv6.conf").with(
-        source: "etc_modprobe.d_ipv6.conf.erb",
-        owner: "root",
-        group: "root",
-        mode: 0644
-      )
-  end
+
   
   it 'excludes chkconfig_ip6tables_off execution due to :nothing guard' do
     expect(chef_run).to_not run_execute('chkconfig_ip6tables_off')

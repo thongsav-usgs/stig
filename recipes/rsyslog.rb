@@ -1,16 +1,12 @@
 # Cookbook Name:: stig
 # Recipe:: rsyslog
 # Author: Ivan Suftin <isuftin@usgs.gov>
-
-# 5.1.3 Configure /etc/rsyslog.conf
-# The /etc/rsyslog.conf file specifies rules for
-# logging and which files are to be used to log
-# certain classes of messages.
 #
-# A great deal of important security-related
-# information is sent via rsyslog (e.g., successful
-# and failed su attempts, failed login attempts,
-# root login attempts, etc.).
+# Description: Configure /etc/rsyslog.conf
+#
+# CIS Benchmark Items
+# RHEL6:  5.1.3
+# CENTOS6: 4.1.3
 
 template "/etc/rsyslog.conf" do
   source "etc_rsyslog.conf.erb"
