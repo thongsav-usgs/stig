@@ -16,6 +16,6 @@ template "/etc/pam.d/system-auth" do
   group "root"
   mode 0644
   variables(
-    :pass_reuse_limit => node[:stig][:system_auth][:pass_reuse_limit] 
+    :pass_reuse_limit => node["stig"]["system_auth"]["pass_reuse_limit"] 
   )
 end

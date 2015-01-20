@@ -3,47 +3,47 @@
 # See https://github.com/USGS-WSI-COOKBOOKS/stig/blob/master/templates/default/etc_modprobe.d_CIS.conf.erb
 
 
-<% if node[:stig][:mount_disable][:cramfs] -%>
+<% if node["stig"]["mount_disable"]["cramfs"] -%>
 install cramfs /bin/true
 <% end -%>
 
-<% if node[:stig][:mount_disable][:freevxfs] -%>
+<% if node["stig"]["mount_disable"]["freevxfs"] -%>
 install freevxfs /bin/true
 <% end -%>
 
-<% if node[:stig][:mount_disable][:jffs2] -%>
+<% if node["stig"]["mount_disable"]["jffs2"] -%>
 install jffs2 /bin/true
 <% end -%>
 
-<% if node[:stig][:mount_disable][:hfs] -%>
+<% if node["stig"]["mount_disable"]["hfs"] -%>
 install hfs /bin/true
 <% end -%>
 
-<% if node[:stig][:mount_disable][:hfsplus] -%>
+<% if node["stig"]["mount_disable"]["hfsplus"] -%>
 install hfsplus /bin/true
 <% end -%>
 
-<% if node[:stig][:mount_disable][:squashfs] -%>
+<% if node["stig"]["mount_disable"]["squashfs"] -%>
 install squashfs /bin/true
 <% end -%>
 
-<% if node[:stig][:mount_disable][:udf] -%>
+<% if node["stig"]["mount_disable"]["udf"] -%>
 install udf /bin/true
 <% end -%>
 
-<% if node[:stig][:network][:disable_dcpp] -%>
+<% if node["stig"]["network"]["disable_dcpp"] -%>
 install dccp /bin/true
 <% end -%>
 
-<% if node[:stig][:network][:disable_sctp] -%>
+<% if node["stig"]["network"]["disable_sctp"] -%>
 install sctp /bin/true
 <% end -%>
 
-<% if node[:stig][:network][:disable_rds] -%>
+<% if node["stig"]["network"]["disable_rds"] -%>
 install rds /bin/true
 <% end -%>
 
-<% if node[:stig][:network][:disable_tipc] -%>
+<% if node["stig"]["network"]["disable_tipc"] -%>
 install tipc /bin/true
 <% end -%>
 

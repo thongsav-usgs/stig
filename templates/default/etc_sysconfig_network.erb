@@ -3,7 +3,7 @@
 # See https://github.com/USGS-WSI-COOKBOOKS/stig/blob/master/templates/default/etc_sysconfig_network.erb
 
 NETWORKING=yes
-HOSTNAME=<%= node[:fqdn ]%>
-NOZEROCONF=<%= node[:stig][:network][:zeroconf]%>
-NETWORKING_IPV6=<%= node[:stig][:network][:ipv6] %>
-IPV6INIT=<%= node[:stig][:network][:ipv6] %>
+HOSTNAME=<%= node["fqdn"]%>
+NOZEROCONF=<%= node["stig"]["network"]["zeroconf"]%>
+NETWORKING_IPV6=<%= node["stig"]["network"]["ipv6"] %>
+IPV6INIT=<%= node["stig"]["network"]["ipv6"] %>

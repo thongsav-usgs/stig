@@ -16,6 +16,6 @@ template "/etc/logrotate.d/syslog" do
   owner "root"
   group "root"
   variables(
-  :logrotate_items => node[:stig][:logging][:logrotate_items]
+  :logrotate_items => node["stig"]["logging"]["logrotate_items"]
   )
 end

@@ -28,43 +28,43 @@ template "/etc/security/limits.conf" do
   mode 0644
 end
 
-if node[:stig][:network][:ip_forwarding]
+if node["stig"]["network"]["ip_forwarding"]
   ip_forwarding = 1
 else
   ip_forwarding = 0
 end
 
-if node[:stig][:network][:packet_redirects]
+if node["stig"]["network"]["packet_redirects"]
   send_redirects = 1
 else
   send_redirects = 0
 end
 
-if node[:stig][:network][:icmp_redirect_accept]
+if node["stig"]["network"]["icmp_redirect_accept"]
   icmp_redirect_accept = 1
 else
   icmp_redirect_accept = 0
 end
 
-if node[:stig][:network][:log_suspicious_packets]
+if node["stig"]["network"]["log_suspicious_packets"]
   log_suspicious_packets = 1
 else
   log_suspicious_packets = 0
 end
 
-if node[:stig][:network][:rfc_source_route_validation]
+if node["stig"]["network"]["rfc_source_route_validation"]
   rfc_source_route_validation = 1
 else
   rfc_source_route_validation = 0
 end
 
-if node[:stig][:network][:ipv6_redirect_accept]
+if node["stig"]["network"]["ipv6_redirect_accept"]
   ipv6_redirect_accept = 1
 else
   ipv6_redirect_accept = 0
 end
 
-if node[:stig][:network][:icmp_all_secure_redirect_accept]
+if node["stig"]["network"]["icmp_all_secure_redirect_accept"]
   icmp_all_secure_redirect_accept = 1
 else
   icmp_all_secure_redirect_accept = 0

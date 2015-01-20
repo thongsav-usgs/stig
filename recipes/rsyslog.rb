@@ -14,7 +14,7 @@ template "/etc/rsyslog.conf" do
   group "root"
   mode 0644
   variables(
-    :rsyslog_rules => node[:stig][:logging][:rsyslog_rules]
+    :rsyslog_rules => node["stig"]["logging"]["rsyslog_rules"]
   )
   notifies :run, "execute[restart_syslog]", :immediately
 end

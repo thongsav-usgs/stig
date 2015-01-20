@@ -38,34 +38,29 @@ end
 bash "no_empty_passwd_fields" do
   user "root"
   code "for user in $(/bin/cat /etc/shadow | /bin/awk -F: '($2 == \"\")' | cut -d':' -f1 $1);do /usr/bin/passwd -l $user;done"
-  guard_interpreter :bash
   only_if "test -n \"$(/bin/cat /etc/shadow | /bin/awk -F: '($2 == \"\" )')\"", :user => "root"
 end
 
 bash "no legacy + entries exist in /etc/passwd" do
   user "root"
   code "sed -i '/^+/ d' /etc/passwd"
-  guard_interpreter :bash
   only_if "test -n \"$(/bin/grep '^+' /etc/passwd)\"", :user => "root"
 end
 
 bash "no legacy + entries exist in /etc/shadow" do
   user "root"
   code "sed -i '/^+/ d' /etc/shadow"
-  guard_interpreter :bash
   only_if "test -n \"$(/bin/grep '^+' /etc/shadow)\"", :user => "root"
 end
 
 bash "no legacy + entries exist in /etc/group" do
   user "root"
   code "sed -i '/^+/ d' /etc/group"
-  guard_interpreter :bash
   only_if "test -n \"$(/bin/grep '^+' /etc/group)\"", :user => "root"
 end
 
 bash "no UID 0 except root account exists" do
   user "root"
   code "for acct in $(/bin/cat /etc/passwd | /bin/awk -F: '($3 == 0) { print $1 }' | grep -v \"root\"); do sed -i \"/^$acct:/ d\" /etc/passwd;done"
-  guard_interpreter :bash
   only_if "/bin/cat /etc/passwd | /bin/awk -F: '($3 == 0) { print $1 }' | grep -v \"root\"", :user => "root"
 end
