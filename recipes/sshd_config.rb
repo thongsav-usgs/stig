@@ -18,31 +18,31 @@
 # - Do Not Allow Users to Set Environment Options
 # - Limit Access via SSH
 
-if node[:stig][:sshd_config][:ignore_rhosts]
+if node["stig"]["sshd_config"]["ignore_rhosts"]
   ignore_rhosts = "yes"
 else
   ignore_rhosts = "no"
 end
 
-if node[:stig][:sshd_config][:host_based_auth]
+if node["stig"]["sshd_config"]["host_based_auth"]
   host_based_auth = "yes"
 else
   host_based_auth = "no"
 end
 
-if node[:stig][:sshd_config][:permit_root_login]
+if node["stig"]["sshd_config"]["permit_root_login"]
   permit_root_login = "yes"
 else
   permit_root_login = "no"
 end
 
-if node[:stig][:sshd_config][:permit_empty_passwords]
+if node["stig"]["sshd_config"]["permit_empty_passwords"]
   permit_empty_passwords = "yes"
 else
   permit_empty_passwords = "no"
 end
 
-if node[:stig][:sshd_config][:allow_users_set_env_opts]
+if node["stig"]["sshd_config"]["allow_users_set_env_opts"]
   allow_users_set_env_opts = "yes"
 else
   allow_users_set_env_opts = "no"
@@ -54,10 +54,10 @@ template "/etc/ssh/sshd_config" do
   owner "root"
   group "root"
   variables(
-    :log_level => node[:stig][:sshd_config][:log_level],
-    :max_auth_tries => node[:stig][:sshd_config][:max_auth_tries],
-    :deny_users => node[:stig][:sshd_config][:deny_users],
-    :banner_path => node[:stig][:sshd_config][:banner_path],
+    :log_level => node["stig"]["sshd_config"]["log_level"],
+    :max_auth_tries => node["stig"]["sshd_config"]["max_auth_tries"],
+    :deny_users => node["stig"]["sshd_config"]["deny_users"],
+    :banner_path => node["stig"]["sshd_config"]["banner_path"],
     :ignore_rhosts => ignore_rhosts,
     :host_based_auth => host_based_auth,
     :permit_root_login => permit_root_login,

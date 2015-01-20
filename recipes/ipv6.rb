@@ -18,7 +18,7 @@ template "/etc/sysconfig/network" do
   mode 0644
 end
 
-if node[:stig][:network][:ipv6] == "no"
+if node["stig"]["network"]["ipv6"] == "no"
   ipv6 = 1
   ipv6OnOff = "off"
 else

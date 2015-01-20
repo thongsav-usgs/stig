@@ -25,46 +25,36 @@
 # - Verify Permissions on /etc/group
 # - Verify User/Group Ownership on /etc/group
 
-file "/etc/anacrontab" do
-  owner "root"
-  group "root"
-  mode 0600
+%w{/etc/anacrontab /etc/crontab}.each do |f|
+  file f do
+    owner "root"
+    group "root"
+    mode 0600  
+  end
 end
 
-file "/etc/crontab" do
-  owner "root"
-  group "root"
-  mode 0600
+%w{/etc/cron.hourly /etc/cron.daily /etc/cron.weekly /etc/cron.monthly /etc/cron.d}.each do |d|
+  directory d do
+    owner "root"
+    group "root"
+    mode 0700 
+  end
 end
 
-directory "/etc/cron.hourly" do
-  owner "root"
-  group "root"
-  mode 0700
+%w{/etc/shadow /etc/gshadow}.each do |f|
+  file f do
+    owner "root"
+    group "root"
+    mode 0000  
+  end
 end
 
-directory "/etc/cron.daily" do
-  owner "root"
-  group "root"
-  mode 0700
-end
-
-directory "/etc/cron.weekly" do
-  owner "root"
-  group "root"
-  mode 0700
-end
-
-directory "/etc/cron.monthly" do
-  owner "root"
-  group "root"
-  mode 0700
-end
-
-directory "/etc/cron.d" do
-  owner "root"
-  group "root"
-  mode 0700
+%w{/etc/passwd /etc/group}.each do |f|
+  file f do
+    owner "root"
+    group "root"
+    mode 0644  
+  end
 end
 
 file "/etc/at.deny" do
@@ -75,28 +65,4 @@ end
 
 file "/etc/at.allow" do
   action :delete
-end
-
-file "/etc/passwd" do
-  owner "root"
-  group "root"
-  mode 0644
-end
-
-file "/etc/shadow" do
-  owner "root"
-  group "root"
-  mode 0000
-end
-
-file "/etc/gshadow" do
-  owner "root"
-  group "root"
-  mode 0000
-end
-
-file "/etc/group" do
-  owner "root"
-  group "root"
-  mode 0644
 end
