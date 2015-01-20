@@ -175,3 +175,8 @@ default['stig']['login_defs']['pass_min_days'] = 1
 # Set Password Expiring Warning Days
 default['stig']['login_defs']['pass_warn_age'] = 15
 
+# Set the login banner(s)
+default['stig']['login_banner']['motd'] = ""
+default['stig']['login_banner']['issue'] = default['stig']['login_banner']['motd']
+default['stig']['login_banner']['issue_net'] = default['stig']['login_banner']['motd']
+

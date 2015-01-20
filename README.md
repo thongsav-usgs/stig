@@ -60,6 +60,9 @@ Attributes
 - `node['stig']['login_defs']['pass_max_days']` = Password expiration in days (Integer)
 - `node['stig']['login_defs']['pass_min_days']` = Minimum wait time, in days, before changing password (Integer)
 - `node['stig']['login_defs']['pass_warn_age']` = Number of days before password expires where system begins warning user (Integer)
+- `node['stig']['login_banner']['motd']` = Login banner (String)
+- `node['stig']['login_banner']['issue']` = Login banner (String)
+- `node['stig']['login_banner']['issue_net']` = Login banner (String)
 
 Usage
 -----
