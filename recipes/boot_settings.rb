@@ -23,8 +23,6 @@
 # - Disable ICMP Redirect Acceptance
 # - Disable Secure ICMP Redirect Acceptance
 
-auditd_config_dir = "/etc/audit/"
-
 template "/boot/grub/grub.conf" do
   source "etc_grub.conf.erb"
   owner "root"
@@ -49,15 +47,6 @@ if %w{rhel fedora centos}.include?(node["platform"])
     group "root"
     mode 0644
   end
-end
-
-# Create auditd configuration file
-directory auditd_config_dir
-template File.join(auditd_config_dir, "auditd.conf") do
-  source "etc_audit_auditd.conf.erb"
-  owner "root"
-  group "root"
-  mode 0640
 end
 
 package "setroubleshoot" do

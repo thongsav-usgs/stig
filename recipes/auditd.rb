@@ -8,5 +8,17 @@
 # See: https://supermarket.chef.io/cookbooks/auditd
 
 node.default["auditd"]["ruleset"] = "cis"
+auditd_config_dir = "/etc/audit/"
+
+directory auditd_config_dir
 
 include_recipe "auditd::rules"
+
+# Create auditd configuration file
+template File.join(auditd_config_dir, "auditd.conf") do
+  source "etc_audit_auditd.conf.erb"
+  owner "root"
+  group "root"
+  mode 0640
+  notifies :restart, "service[auditd]", :immediately
+end
