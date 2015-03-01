@@ -18,7 +18,10 @@ package "aide" do
 end
 
 if %w{debian ubuntu}.include?(node["platform"])
-  
+  # CIS Benchmarks suggest: The prelinking feature can interfere with AIDE because it alters binaries to 
+  # speed up their start up times. Run /usr/sbin/prelink -ua to restore the binaries to their prelinked 
+  # state, thus avoiding false positives from AIDE. 
+  # However, prelink is not preinstalled on (at least) 14.04 so there is no need for this yet.
   
   execute "aideinit" do
     user "root"
