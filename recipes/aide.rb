@@ -9,7 +9,7 @@
 # CIS Benchmark Items
 # RHEL6: 1.4.1, 1.4.2
 # CENTOS6: 1.3.1, 1.3.2
-#
+# UBUNTU: 8.3.1, 8.3.2
 # - Install AIDE
 # - Implement Periodic Execution of File Integrity
 
@@ -17,18 +17,47 @@ package "aide" do
   action :install
 end
 
-execute "init_aide" do
-  user "root"
-  command "/usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'"
-  creates "/var/lib/aide/aide.db.gz"
-  action :run
+if %w{debian ubuntu}.include?(node["platform"])
+  
+  
+  execute "aideinit" do
+    user "root"
+    creates "/var/lib/aide/aide.db.new"
+    action :run
+  end
+  
+  remote_file "/var/lib/aide/aide.db" do
+    user "root"
+    source "file:///var/lib/aide/aide.db.new"
+  end
+  
+  cron "aide_cron" do
+    command "/usr/bin/aide --check"
+    minute "0"
+    hour "5"
+    day "*"
+    month "*"
+    action :create
+    not_if 'crontab -u root -l | grep aide'
+  end
 end
 
-cron "aide_cron" do
-  command "/usr/sbin/aide --check"
-  minute "0"
-  hour "5"
-  day "*"
-  month "*"
-  action :create
+if %w{rhel fedora centos}.include?(node["platform"])
+  execute "init_aide" do
+    user "root"
+    command "/usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'"
+    creates "/var/lib/aide/aide.db.gz"
+    action :run
+  end
+  
+  cron "aide_cron" do
+    command "/usr/sbin/aide --check"
+    minute "0"
+    hour "5"
+    day "*"
+    month "*"
+    action :create
+    not_if 'crontab -u root -l | grep aide'
+  end
 end
+

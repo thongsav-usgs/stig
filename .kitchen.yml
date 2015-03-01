@@ -16,6 +16,16 @@ platforms:
       box: chef/centos-6.6
       box_url: chef/centos-6.6
       provider: vmware_fusion
+  - name:  ubuntu-trusty-vbox
+    driver:
+      box: ubuntu/trusty64
+      box_url: ubuntu/trusty64
+      provider: virtualbox
+  - name: ubuntu-trusty-vmware
+    driver:
+      box: ubuntu/trusty64
+      box_url: ubuntu/trusty64
+      provider: vmware_fusion
 
 # Adding auditd with cis ruleset addresses CIS CentOS Benchmark V1.0.0 4.2.2 and 4.2.4-18
 # NOTE: 4.2.17 needs to be uncommented. and 4.2.12 needs to be confirmed. See cis template for more info.
