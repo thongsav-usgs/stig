@@ -1,5 +1,7 @@
-# Use an MD5 hash for this. Ex: openssl passwd -1 ChangeMe
+# Use an MD5 hash for CentOS. Ex: openssl passwd -1 ChangeMe
 default['stig']['grub']['hashedpassword'] = '$1$ifTCDC.V$0VpmYkffVbzFkE8ElJrWU/' # Hashed 'ChangeMe'
+# Use grub-mkpasswd-pbkdf2 for Ubuntu. This is hashed 'ChangeMe'
+default['stig']['grub']['pbkdf2'] = 'grub.pbkdf2.sha512.10000.018CE115164107059077A9B53F09AD6418CAE35F3C07A0FFE6155DB42C0065A50471E8B20DBADA381EC0BAC658BEB4A5D942D91C081D0B5AF97FEECEE05FD39E.97457A0FA16CC1C4EF8B82D024FA6D9FD74653A27184E256A53FEA9174A9C9E8C4A0218E53BC9DF02E4EA818704A7CD477955688BC525DE71E3FF5FC734461C6'
 
 # Configure Audit Log Storage Size - In megabytes
 default['stig']['auditd']['max_log_file'] = '25' 

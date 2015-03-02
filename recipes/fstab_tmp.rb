@@ -10,6 +10,7 @@
 # CENTOS6: 1.1.2, 1.1.3, 1.1.4, 1.1.6
 # UBUNTU: 2.2, 2.3, 2.4, 2.14, 2.15, 2.16
 # TODO: UBUNTU 2.1 - Need to figure out LVM to create new /tmp partition
+# since a separate /tmp partition does not exist by default
 #
 # - Set nodev option for /tmp Partition
 # - Set nosuid option for /tmp Partition

@@ -23,16 +23,29 @@
 # - Disable ICMP Redirect Acceptance
 # - Disable Secure ICMP Redirect Acceptance
 
-template "/boot/grub/grub.conf" do
-  source "etc_grub.conf.erb"
-  owner "root"
-  group "root"
-  mode 0400
-  sensitive true
+if %w{debian ubuntu}.include?(node["platform"])
+  template "/etc/grub.d/40_custom" do
+    source "etc_grubd_40_custom.erb"
+    variables ({ :pass => node['stig']['grub']['pbkdf2'] })
+    sensitive true
+    notifies :run, "execute[update-grub]", :immediately
+  end
+  
+  execute "update-grub" do
+    action :nothing
+  end
 end
 
 # This is not scored (or even suggested by CIS) in Ubuntu
 if %w{rhel fedora centos}.include?(node["platform"])
+  template "/etc/grub.conf" do
+    source "etc_grub.conf.erb"
+    owner "root"
+    group "root"
+    mode 0400
+    sensitive true
+  end
+  
   template "/etc/selinux/config" do
     source "etc_selinux_config.erb"
     owner "root"
