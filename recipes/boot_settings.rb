@@ -26,7 +26,7 @@
 if %w{debian ubuntu}.include?(node["platform"])
   template "/etc/grub.d/40_custom" do
     source "etc_grubd_40_custom.erb"
-    variables ({ :pass => node['stig']['grub']['pbkdf2'] })
+    variables ({ :pass => node['stig']['grub']['hashedpassword'] })
     sensitive true
     notifies :run, "execute[update-grub]", :immediately
   end
