@@ -9,7 +9,7 @@
 # CIS Benchmark Items
 # RHEL6:  1.7.1, 1.7.2, 1.7.3, 4.1.1, 4.1.2, 4.2.2, 4.2.3, 4.2.4, 4.2.7, 4.4.2.2
 # CENTOS6: 1.6.1, 1.6.2, 1.6.3, 5.1.1, 5.1.2, 5.2.2, 5.2.3, 5.2.4, 5.2.7, 5.4.1.2
-#
+# UBUNTU: 4.1, 4.3, 7.1.1, 7.1.2, 7.2.2, 7.2.3, 7.2.4, 7.2.7, 7.3.2
 # - Restrict Core Dumps
 # - Configure ExecShield
 # - Enable Randomized Virtual Memory Region Placement
@@ -26,6 +26,15 @@ template "/etc/security/limits.conf" do
   owner "root"
   group "root"
   mode 0644
+end
+if %w{debian ubuntu}.include?(node["platform"])
+  package "apport" do
+    action :remove
+  end
+  
+  package "whoopsie" do
+    action :remove
+  end
 end
 
 if node["stig"]["network"]["ip_forwarding"]
@@ -131,7 +140,13 @@ end
 
 execute "sysctl_ipv6_redirect_accept" do
   user "root"
-  command "/sbin/sysctl -w net.ipv6.conf.default.accept_redirects=#{ipv6_redirect_accept}; /sbin/sysctl -w net.ipv6.route.flush=#{ipv6_redirect_accept}"
+  command "/sbin/sysctl -w net.ipv6.conf.all.accept_redirects=#{ipv6_redirect_accept};/sbin/sysctl -w net.ipv6.conf.default.accept_redirects=#{ipv6_redirect_accept}; /sbin/sysctl -w net.ipv6.route.flush=#{ipv6_redirect_accept}"
+  action :nothing
+end
+
+execute "sysctl_log_martians" do
+  user "root"
+  command "/sbin/sysctl -w  net.ipv4.conf.all.log_martians=1; /sbin/sysctl -w net.ipv4.conf.default.log_martians=1"
   action :nothing
 end
 
