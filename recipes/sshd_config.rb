@@ -59,6 +59,8 @@ template "/etc/ssh/sshd_config" do
     :max_auth_tries => node["stig"]["sshd_config"]["max_auth_tries"],
     :deny_users => node["stig"]["sshd_config"]["deny_users"],
     :deny_groups => node["stig"]["sshd_config"]["deny_groups"],
+    :allow_users => node["stig"]["sshd_config"]["allow_users"],
+    :allow_groups => node["stig"]["sshd_config"]["allow_groups"],
     :banner_path => node["stig"]["sshd_config"]["banner_path"],
     :ignore_rhosts => ignore_rhosts,
     :host_based_auth => host_based_auth,

@@ -176,6 +176,8 @@ default['stig']['sshd_config']['deny_users'] = [
   'sshd'
 ]
 default['stig']['sshd_config']['deny_groups'] = []
+default['stig']['sshd_config']['allow_users'] = []
+default['stig']['sshd_config']['allow_groups'] = []
 
 
 # Limit Password Reuse
