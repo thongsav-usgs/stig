@@ -7,6 +7,7 @@
 # CIS Benchmark Items
 # RHEL6:  6.3.6
 # CENTOS6: 6.3.4
+# UBUNTU: 9.2.3
 #
 # - Limit Password Reuse
 
