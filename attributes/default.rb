@@ -66,6 +66,16 @@ default['stig']['network']['rfc_source_route_validation'] = true
 # true = Enable redirect acceptance
 default['stig']['network']['ipv6_redirect_accept'] = false
 
+# Disable IPv6 Router Advertisements
+# false = Disable IPv6 router advertisements
+# true = Enable IPv6 router advertisements
+default['stig']['network']['ipv6_ra_accept'] = false
+
+# Disable IPv6
+# false = Do not disable ipv6
+# true = Disable ipv6
+default['stig']['network']['ipv6_disable'] = true
+
 # Create /etc/hosts.allow
 # An array of <net>/<mask> combinations or ['ALL']
 default['stig']['network']['hosts_allow'] = ['ALL']
