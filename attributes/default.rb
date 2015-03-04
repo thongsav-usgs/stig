@@ -194,3 +194,6 @@ default['stig']['login_banner']['motd'] = ""
 default['stig']['login_banner']['issue'] = default['stig']['login_banner']['motd']
 default['stig']['login_banner']['issue_net'] = default['stig']['login_banner']['motd']
 
+# The address the the mail transfer agent should listen on
+default["stig"]["mail_transfer_agent"]["inet_interfaces"] = "127.0.0.1"
+

@@ -6,10 +6,19 @@
 #
 # CIS Benchmark Items
 # RHEL6:  3.1.16
-# CENTOS6: 3.1.16
+# CENTOS6: 3.16
+# Ubuntu 6.15
+source = "";
+if %w{rhel fedora centos}.include?(node["platform"])
+  source = "etc_main.cf_rhel.erb"
+end
+
+if %w{debian ubuntu}.include?(node["platform"])
+  source = "etc_main.cf_ubuntu.erb"
+end
 
 template "/etc/postfix/main.cf" do
-  source "main.cf.erb"
+  source source
   owner "root"
   group "root"
   mode 0644
