@@ -7,6 +7,7 @@
 # CIS Benchmark Items
 # RHEL6: 6.2.2, 6.2.3, 6.2.5, 6.2.6, 6.2.7, 6.2.8, 6.2.9, 6.2.10, 6.2.13
 # CENTOS6: 6.2.2, 6.2.3, 6.2.5, 6.2.6, 6.2.7, 6.2.8, 6.2.9, 6.2.10, 6.2.13
+# UBUNTU: 9.3.1, 9.3.2, 9.3.3, 9.3.6, 9.3.7, 9.3.8, 9.3.9, 9.3.10, 9.3.13
 #
 # - Set LogLevel to INFO
 # - Set Permissions on /etc/ssh/sshd_config
@@ -57,6 +58,7 @@ template "/etc/ssh/sshd_config" do
     :log_level => node["stig"]["sshd_config"]["log_level"],
     :max_auth_tries => node["stig"]["sshd_config"]["max_auth_tries"],
     :deny_users => node["stig"]["sshd_config"]["deny_users"],
+    :deny_groups => node["stig"]["sshd_config"]["deny_groups"],
     :banner_path => node["stig"]["sshd_config"]["banner_path"],
     :ignore_rhosts => ignore_rhosts,
     :host_based_auth => host_based_auth,

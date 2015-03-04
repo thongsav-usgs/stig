@@ -7,6 +7,9 @@
 # CIS Benchmark Items
 # RHEL6:  5.1.3
 # CENTOS6: 4.1.3
+# UBUNTU: 8.2.3
+
+# NOTE: The default attributes are set for CentOS. Each OS (and each individual system) should set their own rules
 
 template "/etc/rsyslog.conf" do
   source "etc_rsyslog.conf.erb"

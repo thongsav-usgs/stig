@@ -7,6 +7,7 @@
 # CIS Benchmark Items
 # RHEL6:  4.5.1, 4.5.2, 4.5.3, 4.5.4
 # CENTOS6: 5.5.2, 5.5.3, 5.5.4, 5.5.5
+# UBUNTU: 7.4.2, 7.4.3, 7.4.4, 7.4.5
 #
 # - Create /etc/hosts.allow
 # - Verify Permissions on /etc/hosts.allow

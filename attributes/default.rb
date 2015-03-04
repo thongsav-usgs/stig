@@ -175,6 +175,8 @@ default['stig']['sshd_config']['deny_users'] = [
   'nfsnobody',
   'sshd'
 ]
+default['stig']['sshd_config']['deny_groups'] = []
+
 
 # Limit Password Reuse
 # Integer represents the amount of passwords the user is forced to not reuse
