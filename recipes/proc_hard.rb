@@ -201,7 +201,7 @@ end
 
 execute "ipv6_disable" do
   user "root"
-  command " /sbin/sysctl -p"
+  command " /sbin/sysctl -ep"
   action :nothing
 end
 
