@@ -12,13 +12,13 @@
 # will use UID 1000. Effectively, the UID is shared, which is
 # a security problem.
 
-echo "The Output for the Audit of Control 9.2.18 - Check for Duplicate User Names is"
-cat /etc/passwd | cut -f1 -d":" | /bin/sort -n | /usr/bin/uniq -c |\
+echo "The Output for the Audit of Control 9.2.18 - Check for Duplicate User Names is: "
+cat /etc/passwd | cut -f1 -d":" | sort -n | uniq -c |\
 while read x ; do
     [ -z "${x}" ] && break
     set - $x
     if [ $1 -gt 1 ]; then
-        uids=`/bin/gawk -F: '($1 == n) { print $3 }' n=$2 \
+        uids=`gawk -F: '($1 == n) { print $3 }' n=$2 \
             /etc/passwd | xargs`
         echo "Duplicate User Name ($2): ${uids}"
     fi

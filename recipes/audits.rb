@@ -7,7 +7,7 @@
 # CIS Benchmark Items
 # RHEL6: 9.1.9, 9.1.0, 9.1.11, 9.2.1, 9.2.2, 9.2.3, 9.2.4, 9.2.5
 # CENTOS6: 9.1.10, 9.1.11, 9.1.12, 9.2.1, 9.2.2, 9.2.3, 9.2.4, 9.2.5
-#
+# UBUNTU: 12.7, 12.8, 12.9, 13.1, 13.2, 13.3, 13.4, 13.5
 # - Fix World Writable Files
 # - Fix Un-owned Files and Directories
 # - Fix Un-grouped Files and Directories
@@ -37,8 +37,8 @@ end
 
 bash "no_empty_passwd_fields" do
   user "root"
-  code "for user in $(/bin/cat /etc/shadow | /bin/awk -F: '($2 == \"\")' | cut -d':' -f1 $1);do /usr/bin/passwd -l $user;done"
-  only_if "test -n \"$(/bin/cat /etc/shadow | /bin/awk -F: '($2 == \"\" )')\"", :user => "root"
+  code "for user in $(cat /etc/shadow | awk -F: '($2 == \"\")' | cut -d':' -f1 $1);do /usr/bin/passwd -l $user;done"
+  only_if "test -n \"$(cat /etc/shadow | awk -F: '($2 == \"\" )')\"", :user => "root"
 end
 
 bash "no legacy + entries exist in /etc/passwd" do
