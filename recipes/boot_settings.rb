@@ -23,6 +23,8 @@
 # - Disable ICMP Redirect Acceptance
 # - Disable Secure ICMP Redirect Acceptance
 
+needreboot = false
+
 if %w{debian ubuntu}.include?(node["platform"])
   template "/etc/grub.d/40_custom" do
     source "etc_grubd_40_custom.erb"
@@ -52,6 +54,13 @@ if %w{rhel fedora centos}.include?(node["platform"])
     group "root"
     mode 0644
     sensitive true
+    notifies :run, "execute[restart_selinux]", :immediately
+  end
+  
+  # restart selinux
+  execute "restart_selinux" do
+    command "echo 0 > /selinux/enforce && echo 1 > /selinux/enforce"
+    action :nothing
   end
 
   template "/etc/sysconfig/init" do
