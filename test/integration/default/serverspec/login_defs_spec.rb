@@ -5,4 +5,7 @@ require 'spec_helper'
 
 describe file('/etc/login.defs') do
   its(:content) { should match /PASS_MAX_DAYS   60/ }
+  its(:content) { should match /PASS_MIN_DAYS   1/ }
+  its(:content) { should match /PASS_WARN_AGE   15/ }
 end
+
