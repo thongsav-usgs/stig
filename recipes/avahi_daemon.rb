@@ -18,4 +18,14 @@ if %w{rhel fedora centos}.include?(node["platform"])
     action :run
     only_if "/sbin/chkconfig | grep 'avahi-daemon' | grep 'on'"
   end
+  
+  package "avahi" do
+    action :remove
+  end
+end
+
+if %w{debian ubuntu}.include?(node["platform"])
+  package "avahi-daemon" do
+    action :purge
+  end
 end
