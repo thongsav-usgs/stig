@@ -7,6 +7,7 @@
 # CIS Benchmark Items
 # RHEL6:  8.1, 8.1.1
 # CENTOS6: 8.1, 8.2
+# UBUNTU: 11.1, 11.2
 #
 # - Set Warning Banner for Standard Login Services
 # - Remove OS Information from Login Warning Banners

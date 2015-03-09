@@ -1,5 +1,9 @@
-# Use an MD5 hash for this. Ex: openssl passwd -1 ChangeMe
-default['stig']['grub']['hashedpassword'] = '$1$ifTCDC.V$0VpmYkffVbzFkE8ElJrWU/' # Hashed 'ChangeMe'
+# Use an MD5 hash for CentOS. Ex: openssl passwd -1 ChangeMe returns: 
+# $1$ifTCDC.V$0VpmYkffVbzFkE8ElJrWU/
+#
+# Use grub-mkpasswd-pbkdf2 for Ubuntu. This is hashed 'ChangeMe':
+# grub.pbkdf2.sha512.10000.018CE115164107059077A[... cut for brevity ...]525DE71E3FF5FC734461C6
+default['stig']['grub']['hashedpassword'] = ''
 
 # Configure Audit Log Storage Size - In megabytes
 default['stig']['auditd']['max_log_file'] = '25' 
@@ -62,6 +66,16 @@ default['stig']['network']['rfc_source_route_validation'] = true
 # true = Enable redirect acceptance
 default['stig']['network']['ipv6_redirect_accept'] = false
 
+# Disable IPv6 Router Advertisements
+# false = Disable IPv6 router advertisements
+# true = Enable IPv6 router advertisements
+default['stig']['network']['ipv6_ra_accept'] = false
+
+# Disable IPv6
+# false = Do not disable ipv6
+# true = Disable ipv6
+default['stig']['network']['ipv6_disable'] = true
+
 # Create /etc/hosts.allow
 # An array of <net>/<mask> combinations or ['ALL']
 default['stig']['network']['hosts_allow'] = ['ALL']
@@ -97,7 +111,8 @@ default['stig']['network']['ipv6'] = 'no'
 
 # Configure /etc/rsyslog.conf
 # Include rules for logging in array with space separating rule with log location
-default['stig']['logging']['rsyslog_rules'] = [
+default['stig']['logging']['rsyslog_rules'] = []
+default['stig']['logging']['rsyslog_rules_rhel'] = [
   '*.info;mail.none;authpriv.none;cron.none   /var/log/messages',
   'authpriv.*   /var/log/secure',
   'mail.*   -/var/log/maillog',
@@ -105,6 +120,23 @@ default['stig']['logging']['rsyslog_rules'] = [
   '*.emerg   *',
   'uucp,news.crit   /var/log/spooler',
   'local7.*    /var/log/boot.log'
+]
+default['stig']['logging']['rsyslog_rules_debian'] = [
+  '*.emerg :omusrmsg:*',
+  'mail.* -/var/log/mail',
+  'mail.info -/var/log/mail.info',
+  'mail.warning -/var/log/mail.warn',
+  'mail.err /var/log/mail.err',
+  'news.crit -/var/log/news/news.crit',
+  'news.err -/var/log/news/news.err',
+  'news.notice -/var/log/news/news.notice',
+  '*.=warning;*.=err -/var/log/warn',
+  '*.crit /var/log/warn',
+  '*.*;mail.none;news.none -/var/log/messages',
+  'local0,local1.* -/var/log/localmessages',
+  'local2,local3.* -/var/log/localmessages',
+  'local4,local5.* -/var/log/localmessages',
+  'local6,local7.* -/var/log/localmessages'
 ]
 
 # Configure logrotate
@@ -161,6 +193,10 @@ default['stig']['sshd_config']['deny_users'] = [
   'nfsnobody',
   'sshd'
 ]
+default['stig']['sshd_config']['deny_groups'] = []
+default['stig']['sshd_config']['allow_users'] = []
+default['stig']['sshd_config']['allow_groups'] = []
+
 
 # Limit Password Reuse
 # Integer represents the amount of passwords the user is forced to not reuse
@@ -179,4 +215,7 @@ default['stig']['login_defs']['pass_warn_age'] = 15
 default['stig']['login_banner']['motd'] = ""
 default['stig']['login_banner']['issue'] = default['stig']['login_banner']['motd']
 default['stig']['login_banner']['issue_net'] = default['stig']['login_banner']['motd']
+
+# The address the the mail transfer agent should listen on
+default["stig"]["mail_transfer_agent"]["inet_interfaces"] = "127.0.0.1"
 
