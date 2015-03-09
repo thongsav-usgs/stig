@@ -42,11 +42,21 @@ end
   end
 end
 
-%w{/etc/shadow /etc/gshadow}.each do |f|
-  file f do
+if %w{debian ubuntu}.include?(node["platform"])
+  file "/etc/shadow" do
     owner "root"
     group "root"
-    mode 0000  
+    mode 0640  
+  end
+end
+
+if %w{rhel fedora centos}.include?(node["platform"])
+  %w{/etc/shadow /etc/gshadow}.each do |f|
+    file f do
+      owner "root"
+      group "root"
+      mode 0000  
+    end
   end
 end
 
