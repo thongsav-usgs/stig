@@ -30,7 +30,7 @@ if %w{debian ubuntu}.include?(node["platform"])
   mount "/run/shm" do
     fstype "tmpfs"
     device "none"
-    options "remount,nodev,nosuid,noexec"
+    options "rw,nodev,nosuid,noexec"
     action [:mount, :enable]
     notifies :run, "execute[remount]", :immediately
   end
