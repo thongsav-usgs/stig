@@ -40,13 +40,14 @@ end
 
 # This is not scored (or even suggested by CIS) in Ubuntu
 if %w{rhel fedora centos}.include?(node["platform"])
-  template "/etc/grub.conf" do
-    source "etc_grub.conf.erb"
-    owner "root"
-    group "root"
-    mode 0400
-    sensitive true
-  end
+  # TODO- FIXME- This causes AWS EC2 to not reboot properly
+  # template "/etc/grub.conf" do
+  #   source "etc_grub.conf.erb"
+  #   owner "root"
+  #   group "root"
+  #   mode 0400
+  #   sensitive true
+  # end
   
   template "/etc/selinux/config" do
     source "etc_selinux_config.erb"
