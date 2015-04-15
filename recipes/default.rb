@@ -8,6 +8,8 @@ include_recipe "stig::fstab_tmp"
 
 include_recipe "stig::aide"
 
+include_recipe "stig::tcp_wrappers"
+
 include_recipe "stig::boot_settings"
 
 include_recipe "stig::proc_hard"
@@ -41,4 +43,6 @@ include_recipe "stig::file_permissions"
 include_recipe "stig::audits"
 
 include_recipe "stig::audit_scripts"
+
+include_recipe "stig::su_restriction"
 
