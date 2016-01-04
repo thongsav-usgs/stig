@@ -13,7 +13,9 @@
 #boot=/dev/sda
 default=0
 timeout=5
+<% if node['stig']['grub']['hashedpassword'] != '' -%>
 password --md5 <%= node['stig']['grub']['hashedpassword'] %>
+<% end -%>
 splashimage=(hd0,0)/grub/splash.xpm.gz
 hiddenmenu
 title CentOS 6 (<%= node['os_version']%>)
