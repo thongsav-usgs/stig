@@ -40,12 +40,29 @@ end
 
 # This is not scored (or even suggested by CIS) in Ubuntu
 if %w{rhel fedora centos}.include?(node["platform"])
-  template "/etc/grub.conf" do
-    source "etc_grub.conf.erb"
-    owner "root"
-    group "root"
-    mode 0400
-    sensitive true
+
+  # 1.4.1
+  execute "Remove selinux=0 from /etc/grub.conf" do
+    command "sed -i 's/selinux=0//' /etc/grub.conf"
+    only_if "grep -q 'selinux=0' /etc/grub.conf"
+  end
+  execute "Remove enforcing=0 from /etc/grub.conf" do
+    command "sed -i 's/enforcing=0//' /etc/grub.conf"
+    only_if "grep -q 'enforcing=0' /etc/grub.conf"
+  end
+
+  # 1.5.3
+  if node['stig']['grub']['hashedpassword'] != ''
+    password = node['stig']['grub']['hashedpassword']
+    execute "Add password to grub" do
+      command "sed -i '11i password --md5 #{password}' /etc/grub.conf"
+      not_if "grep -q '#{password}' /etc/grub.conf"
+    end
+  else
+    execute "Add password to grub" do
+      command "sed -i '/password/d' /etc/grub.conf"
+      only_if "grep -q 'password' /etc/grub.conf"
+    end
   end
   
   template "/etc/selinux/config" do
