@@ -90,6 +90,7 @@ if %w{rhel fedora centos}.include?(node["platform"])
     variables({
       :enforcing => (enabled_selinux ? 1 : 0)
     })
+    only_if { ::File.directory?("/selinux/enforce") }
     mode 0644
   end
 
