@@ -149,6 +149,13 @@ default['stig']['logging']['logrotate_items'] = [
   '/var/log/boot.log'
 ]
 
+# By default, SELinux is enabled. However, there may be reasons to shut it off
+default['stig']['selinux']['enabled'] = true
+# Possible values: enforcing, permissive
+default['stig']['selinux']['status'] = 'enforcing'
+# Possible values: targeted, mls
+default['stig']['selinux']['type'] = 'targeted'
+
 # Set LogLevel to INFO
 default['stig']['sshd_config']['log_level'] = 'INFO'
 

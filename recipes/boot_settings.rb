@@ -65,19 +65,32 @@ if %w{rhel fedora centos}.include?(node["platform"])
     end
   end
   
+  enabled_selinux = node['stig']['selinux']['enabled']
+  status_selinux = node['stig']['selinux']['status']
+  type_selinux = node['stig']['selinux']['type']
+
   template "/etc/selinux/config" do
     source "etc_selinux_config.erb"
     owner "root"
     group "root"
+    variables({
+      :enabled_selinux => enabled_selinux,
+      :status_selinux => status_selinux,
+      :type_selinux => type_selinux
+    })
     mode 0644
     sensitive true
-    notifies :run, "execute[restart_selinux]", :immediately
+    # notifies :run, "execute[restart_selinux]", :immediately
   end
   
-  # restart selinux
-  execute "restart_selinux" do
-    command "echo 0 > /selinux/enforce && echo 1 > /selinux/enforce"
-    action :nothing
+   template "/selinux/enforce" do
+    source "selinux_enforce.erb"
+    owner "root"
+    group "root"
+    variables({
+      :enforcing => (enabled_selinux ? 1 : 0)
+    })
+    mode 0644
   end
 
   template "/etc/sysconfig/init" do
