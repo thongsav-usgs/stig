@@ -93,6 +93,11 @@ if %w{rhel fedora centos}.include?(node["platform"])
     mode 0644
   end
 
+  execute "toggle_selinux" do
+    command "setenforce #{(enabled_selinux ? 1 : 0)}"
+    not_if "echo $(getenforce) | awk '{print tolower($0)}' | grep #{status_selinux}"
+  end
+
   template "/etc/sysconfig/init" do
     source "etc_sysconfig_init.erb"
     owner "root"
