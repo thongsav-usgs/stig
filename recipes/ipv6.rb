@@ -12,6 +12,56 @@
 # - Disable IPv6 for RHEL
 
 if %w{rhel fedora centos}.include?(node["platform"])
+
+  # Install IPTables, turn off Firewalld
+  if node["platform"] == "centos" && node["platform_version"][0,1].to_i > 6
+    
+    package 'iptables-services' do
+      notifies :run, 'execute[mask_firewalld]', :immediately
+      notifies :run, 'execute[enable_iptables]', :immediately
+      notifies :run, 'execute[enable_ip6tables]', :immediately
+      notifies :run, 'execute[stop_firewalld]', :immediately
+      notifies :run, 'execute[start_iptables]', :immediately
+      notifies :run, 'execute[stop_ip6tables]', :immediately
+    end
+
+    execute "mask_firewalld" do
+      command "systemctl mask firewalld"
+      user "root"
+      action :nothing
+    end
+
+    execute "enable_iptables" do
+      command "systemctl enable iptables"
+      user "root"
+      action :nothing
+    end
+
+    execute "enable_ip6tables" do
+      command "systemctl enable ip6tables"
+      user "root"
+      action :nothing
+    end
+
+    execute "stop_firewalld" do
+      command "systemctl stop firewalld"
+      user "root"
+      action :nothing
+    end
+
+    execute "start_iptables" do
+      command "systemctl start iptables"
+      user "root"
+      action :nothing
+    end
+
+    execute "stop_ip6tables" do
+      command "systemctl stop ip6tables"
+      user "root"
+      action :nothing
+    end
+  end
+
   template "/etc/sysconfig/network" do
     source "etc_sysconfig_network.erb"
     user "root"
