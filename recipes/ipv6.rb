@@ -17,12 +17,19 @@ if %w{rhel fedora centos}.include?(node["platform"])
   if node["platform"] == "centos" && node["platform_version"][0,1].to_i > 6
     
     package 'iptables-services' do
+      notifies :run, 'execute[disable_selinux]', :immediately
       notifies :run, 'execute[mask_firewalld]', :immediately
       notifies :run, 'execute[enable_iptables]', :immediately
       notifies :run, 'execute[enable_ip6tables]', :immediately
       notifies :run, 'execute[stop_firewalld]', :immediately
       notifies :run, 'execute[start_iptables]', :immediately
       notifies :run, 'execute[stop_ip6tables]', :immediately
+      notifies :run, 'execute[enable_selinux]', :immediately
+    end
+    execute "disable_selinux" do
+      command "setenforce 0"
+      user "root"
+      action :nothing
     end
 
     execute "mask_firewalld" do
@@ -57,6 +64,12 @@ if %w{rhel fedora centos}.include?(node["platform"])
 
     execute "stop_ip6tables" do
       command "systemctl stop ip6tables"
+      user "root"
+      action :nothing
+    end
+
+    execute "enable_selinux" do
+      command "setenforce 1"
       user "root"
       action :nothing
     end
