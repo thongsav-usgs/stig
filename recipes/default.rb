@@ -28,7 +28,13 @@ include_recipe "stig::hosts"
 
 include_recipe "stig::rsyslog"
 
-include_recipe "stig::logrotate"
+# CIS Benchmark Items
+# RHEL6:  5.3
+# CENTOS6: 4.3
+# UBUNTU: 8.4 - CIS makes no specific recommendations for Ubuntu. The CentOS recommendations may or may not be correct
+#
+# - Configure logrotate
+include_recipe "logrotate::global"
 
 include_recipe "stig::sshd_config"
 

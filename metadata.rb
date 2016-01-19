@@ -8,3 +8,4 @@ version          '0.2.9'
 supports         'centos'
 supports         'ubuntu'
 depends          "auditd", "~> 0.1.4"
+depends			 "logrotate", "~> 1.9.2"
