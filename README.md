@@ -46,7 +46,6 @@ Attributes
 - `node['stig']['network']['disable_tipc']` = Disable TIPC (true = disable, false = enable) (Boolean)
 - `node['stig']['network']['ipv6']` = Disable IPV6 ("no" = disable, "yes" = enable) (String)
 - `node['stig']['logging']['rsyslog_rules']` = Configure /etc/rsyslog.conf - Include rules for logging in array with space separating rule with log location (Array of String)
-- `node['stig']['logging']['logrotate_items']` = Configure logrotate. Array of strings referring to the file path of log files (Array of String)
 - `node['stig']['sshd_config']['log_level']` = SSHd log level (String)
 - `node['stig']['sshd_config']['max_auth_tries']` = SSHd Max auth tries (Integer)
 - `node['stig']['sshd_config']['ignore_rhosts']` = SSHd Ignore rhosts (Boolean)

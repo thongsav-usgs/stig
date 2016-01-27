@@ -177,14 +177,6 @@ default['logrotate']['global']['/var/log/spooler'] = {
   EOF
 }
 
-# default['stig']['logging']['boot.log'] = [
-#   '/var/log/cron',
-#   '/var/log/maillog',
-#   '/var/log/messages',
-#   '/var/log/secure',
-#   '/var/log/spooler',
-#   '/var/log/boot.log'
-# ]
 
 # By default, SELinux is enabled. However, there may be reasons to shut it off
 default['stig']['selinux']['enabled'] = true

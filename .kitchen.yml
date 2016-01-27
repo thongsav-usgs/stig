@@ -55,4 +55,4 @@ suites:
   - name: noauditd
     run_list:
       - recipe[stig::default]
-      
+    
