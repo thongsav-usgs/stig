@@ -34,7 +34,7 @@
   end
 end
 
-%w{/etc/cron.hourly /etc/cron.daily /etc/cron.weekly /etc/cron.monthly /etc/cron.d /etc/cron.allow /etc/at.allow}.each do |d|
+%w{/etc/cron.hourly /etc/cron.daily /etc/cron.weekly /etc/cron.monthly /etc/cron.d}.each do |d|
   directory d do
     owner "root"
     group "root"
@@ -66,6 +66,14 @@ end
     group "root"
     mode 0644  
   end
+end
+
+file "/etc/at.allow" do
+  action :create
+end
+
+file "/etc/cron.allow" do
+  action :create
 end
 
 
