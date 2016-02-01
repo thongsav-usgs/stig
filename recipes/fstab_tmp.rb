@@ -25,6 +25,7 @@ mount var_tmp do
   fstype   "tmpfs"
   device   tmp
   options  "bind"
+  not_if 'mount | grep /var/tmp'
 end
 
 if %w{debian ubuntu}.include?(node["platform"])
