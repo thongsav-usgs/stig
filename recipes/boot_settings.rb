@@ -82,6 +82,10 @@ if %w{rhel fedora centos}.include?(node["platform"])
     sensitive true
     # notifies :run, "execute[restart_selinux]", :immediately
   end
+
+  link "/etc/sysconfig/selinux" do
+    to "/etc/selinux/config"
+  end
   
    template "/selinux/enforce" do
     source "selinux_enforce.erb"
