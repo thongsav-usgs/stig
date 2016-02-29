@@ -5,6 +5,15 @@
 # grub.pbkdf2.sha512.10000.018CE115164107059077A[... cut for brevity ...]525DE71E3FF5FC734461C6
 default['stig']['grub']['hashedpassword'] = ''
 
+# Set hard core to 0 according to CIS 1.6.1
+default['stig']['limits'] = [
+  {
+    '*' => {
+      'hard' => 'core 65535'
+    }
+  }
+]
+
 # Configure Audit Log Storage Size - In megabytes
 default['stig']['auditd']['max_log_file'] = '25' 
 # Disable System on Audit Log Full (Not Scored)
