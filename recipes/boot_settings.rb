@@ -40,28 +40,67 @@ end
 
 # This is not scored (or even suggested by CIS) in Ubuntu
 if %w{rhel fedora centos}.include?(node["platform"])
-  # TODO- FIXME- This causes AWS EC2 to not reboot properly
-  # template "/etc/grub.conf" do
-  #   source "etc_grub.conf.erb"
-  #   owner "root"
-  #   group "root"
-  #   mode 0400
-  #   sensitive true
-  # end
+
+  # 1.4.1
+  execute "Remove selinux=0 from /etc/grub.conf" do
+    command "sed -i 's/selinux=0//' /etc/grub.conf"
+    only_if "grep -q 'selinux=0' /etc/grub.conf"
+  end
+  execute "Remove enforcing=0 from /etc/grub.conf" do
+    command "sed -i 's/enforcing=0//' /etc/grub.conf"
+    only_if "grep -q 'enforcing=0' /etc/grub.conf"
+  end
+
+  # 1.5.3
+  if node['stig']['grub']['hashedpassword'] != ''
+    password = node['stig']['grub']['hashedpassword']
+    execute "Add password to grub" do
+      command "sed -i '11i password --md5 #{password}' /etc/grub.conf"
+      not_if "grep -q '#{password}' /etc/grub.conf"
+    end
+  else
+    execute "Add password to grub" do
+      command "sed -i '/password/d' /etc/grub.conf"
+      only_if "grep -q 'password' /etc/grub.conf"
+    end
+  end
   
+  enabled_selinux = node['stig']['selinux']['enabled']
+  status_selinux = node['stig']['selinux']['status']
+  type_selinux = node['stig']['selinux']['type']
+
   template "/etc/selinux/config" do
     source "etc_selinux_config.erb"
     owner "root"
     group "root"
+    variables({
+      :enabled_selinux => enabled_selinux,
+      :status_selinux => status_selinux,
+      :type_selinux => type_selinux
+    })
     mode 0644
     sensitive true
-    notifies :run, "execute[restart_selinux]", :immediately
+    # notifies :run, "execute[restart_selinux]", :immediately
+  end
+
+  link "/etc/sysconfig/selinux" do
+    to "/etc/selinux/config"
   end
   
-  # restart selinux
-  execute "restart_selinux" do
-    command "echo 0 > /selinux/enforce && echo 1 > /selinux/enforce"
-    action :nothing
+   template "/selinux/enforce" do
+    source "selinux_enforce.erb"
+    owner "root"
+    group "root"
+    variables({
+      :enforcing => (enabled_selinux ? 1 : 0)
+    })
+    only_if { ::File.directory?("/selinux/enforce") }
+    mode 0644
+  end
+
+  execute "toggle_selinux" do
+    command "setenforce #{(enabled_selinux ? 1 : 0)}"
+    not_if "echo $(getenforce) | awk '{print tolower($0)}' | grep #{status_selinux}"
   end
 
   template "/etc/sysconfig/init" do

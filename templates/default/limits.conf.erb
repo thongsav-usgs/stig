@@ -51,7 +51,12 @@
 #ftp             hard    nproc           0
 #@student        -       maxlogins       4
 
-# Set hard core to 0 according to CIS 1.6.1
-* hard core 0
+<% node['stig']['limits'].each do |lk, lv| -%>
+    <% unless lv.empty? -%>
+    	<% lv.each do |fdk, fdv| -%>
+<%= lk %> <%= fdk %> <%= fdv %>
+    	<% end %> 
+    <% end %>
+<% end %>
 
 # End of file

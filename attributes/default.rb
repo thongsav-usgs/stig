@@ -5,6 +5,15 @@
 # grub.pbkdf2.sha512.10000.018CE115164107059077A[... cut for brevity ...]525DE71E3FF5FC734461C6
 default['stig']['grub']['hashedpassword'] = ''
 
+# Set hard core to 0 according to CIS 1.6.1
+default['stig']['limits'] = [
+  {
+    '*' => {
+      'hard' => 'core 65535'
+    }
+  }
+]
+
 # Configure Audit Log Storage Size - In megabytes
 default['stig']['auditd']['max_log_file'] = '25' 
 # Disable System on Audit Log Full (Not Scored)
@@ -140,14 +149,50 @@ default['stig']['logging']['rsyslog_rules_debian'] = [
 ]
 
 # Configure logrotate
-default['stig']['logging']['logrotate_items'] = [
-  '/var/log/cron',
-  '/var/log/maillog',
-  '/var/log/messages',
-  '/var/log/secure',
-  '/var/log/spooler',
-  '/var/log/boot.log'
-]
+default['logrotate']['global']['/var/log/cron'] = {
+  'sharedscripts' => 'true',
+  'postrotate' => <<-EOF
+    /bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true
+  EOF
+}
+default['logrotate']['global']['/var/log/maillog'] = {
+  'sharedscripts' => 'true',
+  'postrotate' => <<-EOF
+    /bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true
+  EOF
+}
+default['logrotate']['global']['/var/log/messages'] = {
+  'sharedscripts' => 'true',
+  'postrotate' => <<-EOF
+    /bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true
+  EOF
+}
+default['logrotate']['global']['/var/log/secure'] = {
+  'sharedscripts' => 'true',
+  'postrotate' => <<-EOF
+    /bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true
+  EOF
+}
+default['logrotate']['global']['/var/log/spooler'] = {
+  'sharedscripts' => 'true',
+  'postrotate' => <<-EOF
+    /bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true
+  EOF
+}
+default['logrotate']['global']['/var/log/spooler'] = {
+  'sharedscripts' => 'true',
+  'postrotate' => <<-EOF
+    /bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true
+  EOF
+}
+
+
+# By default, SELinux is enabled. However, there may be reasons to shut it off
+default['stig']['selinux']['enabled'] = true
+# Possible values: enforcing, permissive
+default['stig']['selinux']['status'] = 'enforcing'
+# Possible values: targeted, mls
+default['stig']['selinux']['type'] = 'targeted'
 
 # Set LogLevel to INFO
 default['stig']['sshd_config']['log_level'] = 'INFO'

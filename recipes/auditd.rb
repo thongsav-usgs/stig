@@ -20,5 +20,5 @@ template File.join(auditd_config_dir, "auditd.conf") do
   owner "root"
   group "root"
   mode 0640
-  notifies :restart, "service[auditd]", :immediately
+  notifies :reload, "service[auditd]", :immediately
 end

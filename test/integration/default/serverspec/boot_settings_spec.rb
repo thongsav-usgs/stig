@@ -50,7 +50,7 @@ if ['rhel', 'fedora', 'centos', 'redhat'].include?(os[:family])
   
   # CENTOS6: 1.5.3
   describe command('grep "^password" /etc/grub.conf') do
-    its(:stdout) { should match /password --md5/ }
+    its(:stdout) { should_not match /password --md5/ }
   end
   
   # CENTOS6: 1.5.5
