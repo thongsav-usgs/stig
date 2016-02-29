@@ -15,6 +15,7 @@ Requirements
 
 Attributes
 ----------
+- `node['stig']['limits']` = A hash of items that go into /etc/security/limits.conf (Array of Hashes of Hashes)
 - `node['stig']['grub']['hashedpassword']` = The hashed grub password to use. Ex: openssl passwd -1 ChangeMe (String (MD5 Hash))
 - `node['stig']['auditd']['max_log_file']` = See: [Auditd Configuration](http://linux.die.net/man/5/auditd.conf)
 - `node['stig']['auditd']['space_left_action']` = See: [Auditd Configuration](http://linux.die.net/man/5/auditd.conf)

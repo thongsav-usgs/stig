@@ -51,12 +51,14 @@
 #ftp             hard    nproc           0
 #@student        -       maxlogins       4
 
-<% node['stig']['limits'].each do |lk, lv| -%>
-    <% unless lv.empty? -%>
-    	<% lv.each do |fdk, fdv| -%>
+<% node['stig']['limits'].each do |limit| -%>
+	<% limit.each do |lk, lv| -%>
+	    <% unless lv.empty? -%>
+	    	<% lv.each do |fdk, fdv| -%>
 <%= lk %> <%= fdk %> <%= fdv %>
-    	<% end %> 
-    <% end %>
+	    	<% end %> 
+	    <% end %>
+	<% end %>
 <% end %>
 
 # End of file
